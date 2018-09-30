@@ -80,6 +80,9 @@ export const generate = new Proxy({}, {
     }
 });
 
+/*
+ * 普通请求
+ */
 export const common = new Proxy({}, {
     get: function () {
         // 返回动态构造的函数！
