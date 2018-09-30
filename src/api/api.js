@@ -1,3 +1,8 @@
+/**
+ * @desc ajax模块封装
+ * @author asher
+ * @date 2018/09/30
+ */
 import axios from 'axios';
 import { Message } from 'element-ui';
 
