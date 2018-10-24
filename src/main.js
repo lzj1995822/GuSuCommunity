@@ -5,11 +5,15 @@ import App from './App';
 import router from './router';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import {generate, common} from '@/api/api';
+import './style/index.scss';
+import Icon from 'vue-svg-icon/Icon.vue';
+import { generate, common } from '@/api';
 
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
+Vue.component('icon', Icon);
+
 Vue.prototype.$http = common.http;
 Vue.prototype.$genHttp = generate;
 
