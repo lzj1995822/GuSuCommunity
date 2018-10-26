@@ -1,15 +1,20 @@
 <template>
     <div id="app">
+        <layout></layout>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
+import Layout from '@/layout/Layout'
 export default {
     name: 'App',
     data () {
         return {
         };
+    },
+    components: {
+        Layout
     },
     methods: {
     }

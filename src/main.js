@@ -8,10 +8,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './style/index.scss';
 import Icon from 'vue-svg-icon/Icon.vue';
 import { generate, common } from '@/api';
+import store from '@/store'
 
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
+Vue.use(store);
 Vue.component('icon', Icon);
 
 Vue.prototype.$http = common.http;
@@ -21,6 +23,7 @@ Vue.prototype.$genHttp = generate;
 new Vue({
     el: '#app',
     router,
+    store,
     components: { App },
     template: '<App/>'
 });
