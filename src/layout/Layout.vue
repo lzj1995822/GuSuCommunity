@@ -3,20 +3,23 @@
         <div class="drawer-bg"></div>
         <sidebar class="sidebar-container"></sidebar>
         <div class="main-container">
-            <navbar></navbar>
+            <nav-bar></nav-bar>
             <!--<tags-view></tags-view>-->
-            <!--<app-main></app-main>-->
+            <app-main></app-main>
         </div>
     </div>
 </template>
 
 <script>
-    import Sidebar from './components/SideBar'
-
+    import Sidebar from './components/SideBar';
+    import AppMain from './components/AppMain';
+    import NavBar from './components/Navbar';
     export default {
         name: 'layout',
         components: {
-            Sidebar
+            Sidebar,
+            AppMain,
+            NavBar
         },
         computed: {
         },
@@ -33,12 +36,32 @@
     }
 
     .drawer-bg {
-        background: #000;
+        background: #fff;
         opacity: 0.3;
         width: 100%;
         top: 0;
         height: 100%;
         position: absolute;
         z-index: 999;
+    }
+
+    .sidebar-container {
+        transition: width 0.28s;
+        width: 180px !important;
+        height: 100%;
+        position: fixed;
+        font-size: 0px;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1001;
+        overflow: hidden;
+    }
+
+    // 主体区域
+    .main-container {
+        min-height: 100%;
+        transition: margin-left .28s;
+        margin-left: 180px;
     }
 </style>
