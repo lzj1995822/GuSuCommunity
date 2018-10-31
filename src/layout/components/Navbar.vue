@@ -28,7 +28,6 @@
             </div>
 
         </div>
-        <nav-tags></nav-tags>
         <!-- 我的消息 -->
         <el-dialog :visible.sync="msgVisible">
             <el-table :data="msgList">
@@ -88,6 +87,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.nav-bar {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+}
+
 .menu-bar {
     height: 50px;
     line-height: 50px;

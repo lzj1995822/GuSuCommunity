@@ -1,27 +1,25 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from '@/components/HelloWorld';
-import Login from '@/views/login/Login';
-import Layout from '@/layout/Layout'
+import NotFound from '@/layout/components/NotFound';
+import Login from '@/views/Login';
 
 Vue.use(Router);
 
 export default new Router({
     routes: [
         {
-            path: '/',
-            name: 'HelloWorld',
-            component: HelloWorld
+            path: '*',
+            redirect: '/login'
+        },
+        {
+            path: '/404',
+            name: 'NotFound',
+            component: NotFound
         },
         {
             path: '/login',
             name: 'Login',
             component: Login
-        },
-        {
-            path: '/home',
-            name: 'Home',
-            component: Layout
         }
     ]
 });

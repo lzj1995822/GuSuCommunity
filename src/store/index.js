@@ -13,11 +13,18 @@ export default new Vuex.Store({
             {
                 path: "/login",
                 meta: { icon: 'chart', title: '登录' },
-                component: () => import('@/views/login/Login')
+                component: () => import('@/views/Login'),
+                children: [
+                    {
+                        path: "/login",
+                        meta: { icon: 'chart', title: '登录' },
+                        component: () => import('@/views/Login'),
+                    }
+                ]
             }, {
                 path: "/component",
                 meta: { icon: 'bug', title: '测试' },
-                component: () => import('@/views/login/Login')
+                component: () => import('@/views/Login')
             },
         ]
     }

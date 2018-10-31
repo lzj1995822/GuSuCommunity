@@ -42,8 +42,8 @@ export default {
     data () {
         return {
             loginForm: {
-                username: 'admin',
-                password: '1111111'
+                username: '',
+                password: ''
             },
             loginRules: {
                 username: [
@@ -67,10 +67,46 @@ export default {
         handleLogin () {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
+                    let data = [{
+                        path: '/home',
+                        name: 'Home',
+                        componentPath: 'layout/Layout',
+                        children: [{
+                                path: '/',
+                                name: 'HelloWorld12',
+                                componentPath: 'views/HelloWorld'
+                            }, {
+                                path: '/login',
+                                name: 'Login123',
+                                componentPath: 'views/Login'
+                            }]
+                    }];
+                    this.transfer(data);
+                    this.$router.addRoutes(data);
+                    console.log(this.$router);
                     this.loading = true;
+                    this.$router.push('/home');
                 } else {
                     console.log('error submit!!');
                     return false;
+                }
+            });
+        },
+        initRouters() {
+            this.$http('GET', 'routers/getAllByPermission', false).then(data => {
+            })
+        },
+        transfer(routers) {
+            routers.forEach(item => {
+                if (item.componentPath == 'layout/Layout') {
+                    item.component = () => import('@/layout/Layout');
+                } else {
+                    let arr = item.componentPath.split('/');
+                    let componentName = arr[arr.length - 1];
+                    item.component = () => import(`@/views/${componentName}.vue`);
+                }
+                if (item.children) {
+                    this.transfer(item.children);
                 }
             });
         }

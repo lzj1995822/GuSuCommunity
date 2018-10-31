@@ -14,6 +14,7 @@
     import Sidebar from './components/SideBar';
     import AppMain from './components/AppMain';
     import NavBar from './components/Navbar';
+
     export default {
         name: 'layout',
         components: {
@@ -47,10 +48,9 @@
 
     .sidebar-container {
         transition: width 0.28s;
-        width: 180px !important;
+        width: 200px !important;
         height: 100%;
         position: fixed;
-        font-size: 0px;
         top: 0;
         bottom: 0;
         left: 0;
@@ -62,6 +62,6 @@
     .main-container {
         min-height: 100%;
         transition: margin-left .28s;
-        margin-left: 180px;
+        margin-left: 200px;
     }
 </style>
