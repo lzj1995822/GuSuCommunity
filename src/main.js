@@ -19,8 +19,8 @@ Vue.component('icon', Icon);
 Vue.prototype.$http = common.http;
 Vue.prototype.$genHttp = generate;
 
-console.log("3333333333333")
-router.addRoutes(store.state.menuList);
+console.log("3333333333333",router);
+router.options.routes.concat(JSON.parse(sessionStorage.getItem('menu')));
 
 /* eslint-disable no-new */
 new Vue({

@@ -85,9 +85,11 @@ export default {
                                 },
                             }]
                     }];
+                    sessionStorage.setItem("menu",JSON.stringify(data));
                     this.$store.commit("getMenu",data);
                     this.transfer(data);
                     this.$router.addRoutes(data);
+                    this.$router.options.routes.push(data[0]);
                     console.log(this.$router);
                     this.loading = true;
                     this.$router.push('/home');
@@ -106,7 +108,7 @@ export default {
                 if (item.name == 'Home') {
                     item.component = () => import('@/layout/Layout');
                 } else {
-                    item.component = () => import(`@/views/menu/${item.name}.vue`);
+                    item.component = () => import('@/layout/Layout');
                 }
                 if (item.children) {
                     this.transfer(item.children);
