@@ -23,12 +23,6 @@
 
             <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">登 录</el-button>
 
-            <div class="tips">
-                <span>王钧小鸡鸡版权所有，禁止盗版！</span>
-            </div>
-            <div class="tips">
-                <span>王钧小鸡鸡版权所有，禁止盗版！</span>
-            </div>
         </el-form>
 
     </div>
@@ -41,6 +35,7 @@ export default {
     name: 'login',
     data () {
         return {
+            src:"https://www.baidu.com",
             loginForm: {
                 username: '',
                 password: ''
@@ -70,17 +65,27 @@ export default {
                     let data = [{
                         path: '/home',
                         name: 'Home',
-                        componentPath: 'layout/Layout',
+                        meta: {
+                            icon: 'form',
+                            title: '大标题'
+                        },
                         children: [{
-                                path: '/',
-                                name: 'HelloWorld12',
-                                componentPath: 'views/HelloWorld'
+                                path: '/12',
+                                name: 'HelloWorld',
+                                meta: {
+                                    icon: 'form',
+                                    title: '标题1'
+                                },
                             }, {
                                 path: '/login',
-                                name: 'Login123',
-                                componentPath: 'views/Login'
+                                name: 'Login',
+                                meta: {
+                                    icon: 'form',
+                                    title: '标题1'
+                                },
                             }]
                     }];
+                    this.$store.commit("getMenu",data);
                     this.transfer(data);
                     this.$router.addRoutes(data);
                     console.log(this.$router);
@@ -98,12 +103,10 @@ export default {
         },
         transfer(routers) {
             routers.forEach(item => {
-                if (item.componentPath == 'layout/Layout') {
+                if (item.name == 'Home') {
                     item.component = () => import('@/layout/Layout');
                 } else {
-                    let arr = item.componentPath.split('/');
-                    let componentName = arr[arr.length - 1];
-                    item.component = () => import(`@/views/${componentName}.vue`);
+                    item.component = () => import(`@/views/menu/${item.name}.vue`);
                 }
                 if (item.children) {
                     this.transfer(item.children);

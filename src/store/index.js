@@ -10,22 +10,11 @@ export default new Vuex.Store({
     },
     state: {
         menuList: [
-            {
-                path: "/login",
-                meta: { icon: 'chart', title: '登录' },
-                component: () => import('@/views/Login'),
-                children: [
-                    {
-                        path: "/login",
-                        meta: { icon: 'chart', title: '登录' },
-                        component: () => import('@/views/Login'),
-                    }
-                ]
-            }, {
-                path: "/component",
-                meta: { icon: 'bug', title: '测试' },
-                component: () => import('@/views/Login')
-            },
         ]
+    },
+    mutations: {
+        getMenu(state, data) {
+            state.menuList = data;
+        }
     }
 })
