@@ -13,8 +13,8 @@ const CODE_MAP = {
 };
 // 创建实例
 const service = axios.create({
-    baseURL: '/leasing-api/', // 基准地址
-    timeout: 5000 // 超时时间
+    baseURL: '/api', // 基准地址
+    timeout: 50000 // 超时时间
 });
 
 // 请求拦截器
@@ -38,13 +38,13 @@ service.interceptors.response.use(
             // 请求成功则只返回返回的数据，并且用promise做封装，以方便做业务逻辑的同步处理
             // 有些成功的请求并不需要弹框，还需传标志位。。。
             if (response.config.showMessage) {
-                Message.success(response.data.message);
+                Message.success(response.data.msg);
             }
             return Promise.resolve(response.data.content);
         } else if (response.data.code === CODE_MAP.ERROR) {
             // 请求失败则要弹提示框
-            Message.error(response.data.message);
-            return Promise.reject(response.data.message);
+            Message.error(response.data.msg);
+            return Promise.reject(response.data.msg);
         }
     },
     error => {

@@ -1,7 +1,6 @@
 <template>
     <div class="app-wrapper">
-        <div class="drawer-bg"></div>
-        <sidebar class="sidebar-container"></sidebar>
+        <sidebar class="sidebar-container "></sidebar>
         <div class="main-container">
             <nav-bar></nav-bar>
             <!--<tags-view></tags-view>-->
@@ -43,7 +42,7 @@
         top: 0;
         height: 100%;
         position: absolute;
-        z-index: 999;
+        z-index: 1;
     }
 
     .sidebar-container {

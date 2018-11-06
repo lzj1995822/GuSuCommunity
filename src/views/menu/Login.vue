@@ -4,11 +4,11 @@
             <div class="title-container">
                 <h3 class="title">登 录</h3>
             </div>
-            <el-form-item prop="username">
+            <el-form-item prop="code">
                 <span class="svg-container svg-container_login">
                   <icon name="user" scale="2.5"></icon>
                 </span>
-                <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username"></el-input>
+                <el-input name="code" type="text" v-model="loginForm.code" autoComplete="on" placeholder="code"></el-input>
             </el-form-item>
 
             <el-form-item prop="password">
@@ -37,17 +37,17 @@ export default {
         return {
             src:"https://www.baidu.com",
             loginForm: {
-                username: '',
+                code: '',
                 password: ''
             },
             loginRules: {
-                username: [
+                code: [
                     { required: true, trigger: 'blur', message: "请输入用户名" },
                     { pattern: regex.low_case, trigger: 'blur', message: "请输入小写用户名"}
                 ],
                 password: [
                     { required: true, trigger: 'blur', message: "请输入用户名" },
-                    { pattern: regex.low_case, trigger: 'blur', message: "请输入小写用户名"}
+                    { pattern: /^[0-9]+$/ , trigger: 'blur', message: "请输入小写用户名"}
                 ]
             },
             passwordType: 'password',
@@ -60,6 +60,9 @@ export default {
             this.passwordType = this.passwordType === 'password' ? '' : 'password';
         },
         handleLogin () {
+            this.$http('POST', `/identity/principal/login`, this.loginForm).then(data => {
+                sessionStorage.setItem('token', data)
+            });
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
                     let data = [{
@@ -69,28 +72,37 @@ export default {
                             icon: 'form',
                             title: '大标题'
                         },
-                        children: [{
-                                path: '/12',
+                        children: [
+                            {
+                                path: '12',
                                 name: 'HelloWorld',
                                 meta: {
                                     icon: 'form',
                                     title: '标题1'
-                                },
-                            }, {
-                                path: '/login',
+                                }
+                            },
+                            {
+                                path: 'login',
                                 name: 'Login',
                                 meta: {
                                     icon: 'form',
                                     title: '标题1'
-                                },
-                            }]
+                                }
+                            },
+                            {
+                                path: 'upload',
+                                name: 'Upload',
+                                meta: {
+                                    icon: 'form',
+                                    title: '上传'
+                                }
+                            }
+                        ]
                     }];
                     sessionStorage.setItem("menu",JSON.stringify(data));
                     this.$store.commit("getMenu",data);
                     this.transfer(data);
                     this.$router.addRoutes(data);
-                    this.$router.options.routes.push(data[0]);
-                    console.log(this.$router);
                     this.loading = true;
                     this.$router.push('/home');
                 } else {
@@ -106,9 +118,9 @@ export default {
         transfer(routers) {
             routers.forEach(item => {
                 if (item.name == 'Home') {
-                    item.component = () => import('@/layout/Layout');
+                    item.component = () => import(`@/layout/Layout.vue`);
                 } else {
-                    item.component = () => import('@/layout/Layout');
+                    item.component = () => import(`@/views/menu/${item.name}.vue`);
                 }
                 if (item.children) {
                     this.transfer(item.children);
