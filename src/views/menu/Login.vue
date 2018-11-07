@@ -30,6 +30,7 @@
 
 <script>
 import regex from '@/utils/regex';
+import DynamicRoutes from '@/utils/dynamic-routes';
 
 export default {
     name: 'login',
@@ -101,7 +102,7 @@ export default {
                     }];
                     sessionStorage.setItem("menu",JSON.stringify(data));
                     this.$store.commit("getMenu",data);
-                    this.transfer(data);
+                    DynamicRoutes.transfer(data);
                     this.$router.addRoutes(data);
                     this.loading = true;
                     this.$router.push('/home');
@@ -114,18 +115,6 @@ export default {
         initRouters() {
             this.$http('GET', 'routers/getAllByPermission', false).then(data => {
             })
-        },
-        transfer(routers) {
-            routers.forEach(item => {
-                if (item.name == 'Home') {
-                    item.component = () => import(`@/layout/Layout.vue`);
-                } else {
-                    item.component = () => import(`@/views/menu/${item.name}.vue`);
-                }
-                if (item.children) {
-                    this.transfer(item.children);
-                }
-            });
         }
     },
     created () {

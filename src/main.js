@@ -8,7 +8,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './style/index.scss';
 import Icon from 'vue-svg-icon/Icon.vue';
 import { generate, common } from '@/api';
-import store from '@/store'
+import store from '@/store';
+import DynamicRoutes from '@/utils/dynamic-routes';
 
 Vue.config.productionTip = false;
 
@@ -19,7 +20,8 @@ Vue.component('icon', Icon);
 Vue.prototype.$http = common.http;
 Vue.prototype.$genHttp = generate;
 
-/* eslint-disable no-new */
+DynamicRoutes.flushHandler(router, store);
+
 new Vue({
     el: '#app',
     router,
