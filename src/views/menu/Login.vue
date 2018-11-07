@@ -84,7 +84,7 @@ export default {
                             },
                             {
                                 path: 'login',
-                                name: 'Login',
+                                name: 'Login1',
                                 meta: {
                                     icon: 'form',
                                     title: '标题1'
