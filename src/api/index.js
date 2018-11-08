@@ -53,7 +53,7 @@ service.interceptors.response.use(
     error => {
         // 处理HTTP请求错误
         Message.error('HTTP请求错误！');
-        this.router.push('Login');
+        this.router.push({path:'/login'});
         return Promise.reject(error);
     }
 );

@@ -63,53 +63,39 @@ export default {
         handleLogin () {
             this.$http('POST', `/identity/principal/login`, this.loginForm).then(data => {
                 sessionStorage.setItem('token', data)
-            });
-            this.$refs.loginForm.validate(valid => {
-                if (valid) {
-                    let data = [{
-                        path: '/home',
-                        name: 'Home',
-                        meta: {
-                            icon: 'form',
-                            title: '大标题'
-                        },
-                        children: [
-                            {
-                                path: '12',
-                                name: 'HelloWorld',
-                                meta: {
-                                    icon: 'form',
-                                    title: '标题1'
-                                }
-                            },
-                            {
-                                path: 'login',
-                                name: 'Login1',
-                                meta: {
-                                    icon: 'form',
-                                    title: '标题1'
-                                }
-                            },
-                            {
-                                path: 'upload',
-                                name: 'Upload',
-                                meta: {
-                                    icon: 'form',
-                                    title: '上传'
-                                }
+            }).then(() => {
+                let data = [{
+                    path: '/home',
+                    name: 'Home',
+                    meta: {
+                        icon: 'form',
+                        title: '大标题'
+                    },
+                    children: [
+                        {
+                            path: '12',
+                            name: 'HelloWorld',
+                            meta: {
+                                icon: 'form',
+                                title: '标题1'
                             }
-                        ]
-                    }];
-                    sessionStorage.setItem("menu",JSON.stringify(data));
-                    this.$store.commit("getMenu",data);
-                    DynamicRoutes.transfer(data);
-                    this.$router.addRoutes(data);
-                    this.loading = true;
-                    this.$router.push('/home');
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
+                        },
+                        {
+                            path: 'upload',
+                            name: 'Upload',
+                            meta: {
+                                icon: 'form',
+                                title: '上传'
+                            }
+                        }
+                    ]
+                }];
+                sessionStorage.setItem("menu",JSON.stringify(data));
+                this.$store.commit("getMenu",data);
+                DynamicRoutes.transfer(data);
+                this.$router.addRoutes(data);
+                this.loading = true;
+                this.$router.push('Home');
             });
         },
         initRouters() {
