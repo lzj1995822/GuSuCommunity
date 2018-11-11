@@ -31,6 +31,7 @@
 <script>
 import regex from '@/utils/regex';
 import DynamicRoutes from '@/utils/dynamic-routes';
+import cache from "../../utils/cache";
 
 export default {
     name: 'login',
@@ -64,43 +65,101 @@ export default {
             this.$http('POST', `/identity/principal/login`, this.loginForm).then(data => {
                 sessionStorage.setItem('token', data)
             }).then(() => {
-                let data = [{
-                    path: '/home',
-                    name: 'Home',
-                    meta: {
-                        icon: 'form',
-                        title: '大标题'
-                    },
-                    children: [
-                        {
-                            path: '12',
-                            name: 'HelloWorld',
-                            meta: {
-                                icon: 'form',
-                                title: '标题1'
-                            }
-                        },
-                        {
-                            path: 'upload',
-                            name: 'Upload',
-                            meta: {
-                                icon: 'form',
-                                title: '上传'
-                            }
-                        }
-                    ]
-                }];
-                sessionStorage.setItem("menu",JSON.stringify(data));
-                this.$store.commit("getMenu",data);
-                DynamicRoutes.transfer(data);
-                this.$router.addRoutes(data);
-                this.loading = true;
-                this.$router.push('Home');
+                this.$http('POST', `/identity/sysRoutes/list`).then(data => {
+                    sessionStorage.setItem("menu",JSON.stringify(data));
+                    this.$store.commit("getMenu",data);
+                    DynamicRoutes.transfer(data);
+                    this.$router.addRoutes(data);
+                    this.loading = true;
+                    this.$router.push('Home');
+                });
             });
         },
-        initRouters() {
-            this.$http('GET', 'routers/getAllByPermission', false).then(data => {
-            })
+        test() {
+            let xx = {
+                "message": "成功",
+                "totalNum": 4,
+                "currentPage": 1,
+                "code": "0",
+                "totalPage": 1,
+                "video": [
+                {
+                    "playUrl":"http://42.48.60.247:8085/xingsha/info-video.html?assetId=JTEDU0953333072",
+                    "region": "句容",
+                    "genre": "",
+                    "category": "\\其他\\",
+                    "assetId": "JTEDU0953333072",
+                    "name": "请填写名称",
+                    "length": "00:00:17",
+                    "year": "",
+                    "actors": "没有演员",
+                    "directors": "没有导演",
+                    "posterUrl": "JTEDU/DU/JTEDU0953333083P-1.gif",
+                    "chaper": "1",
+                    "introduction": ""
+                },
+                {
+                    "playUrl": "http://42.48.60.247:8085/xingsha/info-video.html?assetId=JTEDU0953076902",
+                    "region": "句容",
+                    "genre": "",
+                    "category": "\\党建\\组织工作\\视频点播\\视频点播\\",
+                    "assetId": "JTEDU0953076902",
+                    "name": "国歌",
+                    "length": "00:01:24",
+                    "year": "",
+                    "actors": "没有演员",
+                    "directors": "没有导演",
+                    "posterUrl": "JTEDU/DU/JTEDU0953076923P-1.jpg",
+                    "chaper": "1",
+                    "introduction": ""
+                },
+                {
+                    "playUrl":"http://42.48.60.247:8085/xingsha/info-video.html?assetId=JTEDU1000093832",
+                    "region": "句容",
+                    "genre": "",
+                    "category": "\\其他\\",
+                    "assetId": "JTEDU1000093832",
+                    "name": "测试",
+                    "length": "00:00:17",
+                    "year": "",
+                    "actors": "没有演员",
+                    "directors": "没有导演",
+                    "posterUrl": "JTEDU/DU/JTEDU1000093843P-1.jpg",
+                    "chaper": "1",
+                    "introduction": ""
+                },
+                {
+                    "playUrl": "http://42.48.60.247:8085/xingsha/info-video.html?assetId=JTEDU0554071342",
+                    "region": "句容",
+                    "genre": "",
+                    "category": "\\党建\\组织工作\\视频点播\\视频点播\\",
+                    "assetId": "JTEDU0554071342",
+                    "name": "文昌阁",
+                    "length": "00:00:15",
+                    "year": "",
+                    "actors": "没有演员",
+                    "directors": "没有导演",
+                    "posterUrl": "JTEDU/DU/JTEDU0554071353P-1.jpg",
+                    "chaper": "1",
+                    "introduction": ""
+                }
+            ]
+            };
+            let arr = xx.video;
+            let caArr = [];
+            let cache = {};
+            arr.forEach( item => {
+                let fg = item.category.split("\\");
+                let ca = fg[fg.length - 2];
+                let length = caArr.filter( it => it === ca).length;
+                if (length == 0) {
+                    caArr.push(ca);
+                    cache[ca] = [];
+                }
+                cache[ca].push(item);
+
+            });
+            console.log(cache)
         }
     },
     created () {

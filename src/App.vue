@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import Layout from '@/layout/Layout'
 export default {
     name: 'App',
     data () {
@@ -13,7 +12,6 @@ export default {
         };
     },
     components: {
-        Layout
     },
     methods: {
     }

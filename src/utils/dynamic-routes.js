@@ -6,7 +6,7 @@ export default {
      * 将路由component属性转成对应组件对象
      * */
      transfer(routers) {
-        routers.forEach(item => {
+         routers.forEach(item => {
             if (item.name === 'Home') {
                 item.component = () => import(`@/layout/Layout.vue`);
             } else {
@@ -15,7 +15,7 @@ export default {
             if (item.children) {
                 this.transfer(item.children);
             }
-        });
+         });
     },
 
     /**

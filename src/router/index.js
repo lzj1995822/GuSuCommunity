@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
     }
     let token = sessionStorage.getItem("token");
     if (!token) {
-        next('login');
+        next('/login');
         return;
     }
     next();
