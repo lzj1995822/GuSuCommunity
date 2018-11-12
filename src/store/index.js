@@ -9,12 +9,15 @@ export default new Vuex.Store({
         tagsView
     },
     state: {
-        menuList: [
-        ]
+        menuList: [],
+        classInfo: {}
     },
     mutations: {
         getMenu(state, data) {
             state.menuList = data;
+        },
+        getClassInfo(state, data) {
+            state.classInfo = data;
         }
     }
 })

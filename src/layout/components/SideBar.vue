@@ -32,6 +32,11 @@
         computed: {
             routes() {
                 return this.$store.state.menuList;
+            },
+            routeName() {
+                let matched = this.$route.matched;
+                this.$store.commit("getClassInfo", matched[matched.length-1].meta.classInfo);
+                return this.$route.name;
             }
         },
         methods: {
