@@ -8,9 +8,21 @@
             default-expand-all
             :expand-on-click-node="false"
             :filter-node-method="filterNode"
-            :render-content="renderContent"
-            >
+            :render-content="renderContent">
         </el-tree>
+
+        <el-dialog title="路由配置" :visible.sync="handlerVis" width="30%" align="left">
+            <el-form :model="handlerForm" class="dialog-form">
+                <el-form-item v-for="item in classInfo.properties" :label="item.des" :prop="item.name" :inline="true" label-width="100px">
+                    <el-input v-model="handlerForm[item.name]" type="text" size="small"></el-input>
+                </el-form-item>
+                <el-form-item :inline="true" style="text-align: right">
+                    <el-button size="mini" type="primary" @click="">提交</el-button>
+                    <el-button size="mini" type="danger"  @click="">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+
     </section>
 </template>
 
@@ -19,11 +31,15 @@
         name: "RouteConfig",
         data() {
             return {
-                menu: []
+                menu: [],
+                handlerVis: true, // 操作框显示控制标志
+                handlerForm: {}, //操作表单
+                classInfo: {}, //对应实体类信息
             }
         },
         created() {
             this.menu = this.$store.state.menuList;
+            this.classInfo = this.$store.state.classInfo;
         },
         methods: {
             /**
@@ -86,5 +102,12 @@
     justify-content: space-between;
     font-size: 14px;
     padding-right: 8px;
+}
+.dialog-form {
+    padding-right: 50px;
+}
+
+.btn-right {
+    float: right;
 }
 </style>
