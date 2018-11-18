@@ -17,7 +17,7 @@
                     <el-input v-model="handlerForm[item.name]" type="text" size="small"></el-input>
                 </el-form-item>
                 <el-form-item :inline="true" style="text-align: right">
-                    <el-button size="mini" type="primary" @click="">提交</el-button>
+                    <el-button size="mini" type="primary" @click="submit">提交</el-button>
                     <el-button size="mini" type="danger"  @click="">取消</el-button>
                 </el-form-item>
             </el-form>
@@ -32,7 +32,7 @@
         data() {
             return {
                 menu: [],
-                handlerVis: true, // 操作框显示控制标志
+                handlerVis: false, // 操作框显示控制标志
                 handlerForm: {}, //操作表单
                 classInfo: {}, //对应实体类信息
             }
@@ -82,6 +82,20 @@
                         </span>
                     </span>
                 );
+            },
+            /**
+             * 添加
+             * @param data
+             */
+            append(data) {
+                this.handlerVis = true;
+                this.handlerForm.parentId = data.id;
+                console.log(data, "chenzz")
+            },
+            submit() {
+                this.$http("POST", `/identity/sysRoutes/`, Object.assign({},this.handlerForm)).then(data => {
+                    console.log(data)
+                })
             }
         }
     }

@@ -13,7 +13,9 @@ export default {
                 console.log(item.component);
                 item.component = () => import(`@/views/menu/${item.componentName}.vue`);
             }
-            item.meta.classInfo = item.sysClass;
+            if (item.sysClass) {
+                item.meta.classInfo = item.sysClass;
+            }
             if (item.children) {
                 this.transfer(item.children);
             }
