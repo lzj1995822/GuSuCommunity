@@ -10,7 +10,8 @@ export default {
             if (item.name === 'Home') {
                 item.component = () => import(`@/layout/Layout.vue`);
             } else {
-                item.component = () => import(`@/views/menu/${item.name}.vue`);
+                console.log(item.component);
+                item.component = () => import(`@/views/menu/${item.componentName}.vue`);
             }
             item.meta.classInfo = item.sysClass;
             if (item.children) {
