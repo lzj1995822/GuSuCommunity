@@ -13,12 +13,21 @@
 
         <el-dialog title="路由配置" :visible.sync="handlerVis" width="30%" align="left">
             <el-form :model="handlerForm" class="dialog-form">
-                <el-form-item v-for="item in classInfo.properties" :label="item.des" :prop="item.name" :inline="true" label-width="100px">
-                    <el-input v-model="handlerForm[item.name]" type="text" size="small"></el-input>
-                </el-form-item>
+                <template v-for="item in classInfo.properties">
+                    <el-form-item v-if="item.isObject === '0'" :key="item.id" :label="item.des" :prop="item.name" :inline="true" label-width="100px">
+                        <el-input v-model="handlerForm[item.name]" v-if="item.isObject === '0'" type="text" size="small"></el-input>
+                    </el-form-item>
+                    <template v-else>
+                        <el-form-item :label="item.des" :key="item.id" label-width="100px">
+                        </el-form-item>
+                        <el-form-item v-for="subItem in item.obj.properties" :key="subItem.id" :label="subItem.des" :prop="subItem.name" :inline="true" label-width="100px">
+                            <el-input v-model="handlerForm[item.name][subItem.name]" type="text" size="small"></el-input>
+                        </el-form-item>
+                    </template>
+                </template>
                 <el-form-item :inline="true" style="text-align: right">
                     <el-button size="mini" type="primary" @click="submit">提交</el-button>
-                    <el-button size="mini" type="danger"  @click="">取消</el-button>
+                    <el-button size="mini" type="danger"  @click="cancel">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -33,7 +42,9 @@
             return {
                 menu: [],
                 handlerVis: false, // 操作框显示控制标志
-                handlerForm: {}, //操作表单
+                handlerForm: {
+                    meta: {}
+                }, //操作表单
                 classInfo: {}, //对应实体类信息
             }
         },
@@ -96,6 +107,9 @@
                 this.$http("POST", `/identity/sysRoutes/`, Object.assign({},this.handlerForm)).then(data => {
                     console.log(data)
                 })
+            },
+            cancel() {
+
             }
         }
     }

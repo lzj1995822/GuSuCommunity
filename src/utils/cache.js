@@ -25,9 +25,9 @@
  */
 function guid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        let r = Math.random() * 16 | 0
-        let v = c === 'x' ? r : (r & 0x3 | 0x8)
-        return v.toString(16)
+        let r = Math.random() * 16 | 0;
+        let v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
     })
 }
 
@@ -38,29 +38,29 @@ function guid() {
  * @param form 模态框所绑定的表单变量
  */
 let handleCache = function(cacheList, tableList, form) {
-    let id = form.id
-    let fakeId = form.fakeId
+    let id = form.id;
+    let fakeId = form.fakeId;
     // 已存库数据编辑处理
     if (id) {
-        let index = cacheList.findIndex(item => item.id === id)
+        let index = cacheList.findIndex(item => item.id === id);
         if (index !== -1) {
-            Object.assign(cacheList[index], form)
+            Object.assign(cacheList[index], form);
         } else {
-            cacheList.push(form)
+            cacheList.push(form);
         }
-        index = tableList.findIndex(item => item.id === id)
-        this.$set(tableList, index, form)
+        index = tableList.findIndex(item => item.id === id);
+        this.$set(tableList, index, form);
     } else if (fakeId) {
         // 新增未存库数据编辑处理
-        let index = cacheList.findIndex(item => item.fakeId === fakeId)
-        Object.assign(cacheList[index], form)
-        index = tableList.findIndex(item => item.fakeId === fakeId)
-        this.$set(tableList, index, form)
+        let index = cacheList.findIndex(item => item.fakeId === fakeId);
+        Object.assign(cacheList[index], form);
+        index = tableList.findIndex(item => item.fakeId === fakeId);
+        this.$set(tableList, index, form);
     } else {
         // 纯新增处理
-        form.fakeId = guid()
-        tableList.push(form)
-        cacheList.push(form)
+        form.fakeId = guid();
+        tableList.push(form);
+        cacheList.push(form);
     }
 }
 
@@ -71,7 +71,7 @@ let handleCache = function(cacheList, tableList, form) {
  * @return {*}
  */
 let cacheFilter = (cacheList, deleteIdList) => {
-    return cacheList.filter(item => deleteIdList.indexOf(item.id) === -1)
+    return cacheList.filter(item => deleteIdList.indexOf(item.id) === -1);
 }
 
 /**
@@ -81,8 +81,8 @@ let cacheFilter = (cacheList, deleteIdList) => {
  * @param conObj 界面显示隐藏控制变量
  */
 let showHandle = function(form, row, conObj) {
-    Object.assign(form, row)
-    this[conObj] = true
+    Object.assign(form, row);
+    this[conObj] = true;
 }
 
 /**
@@ -90,7 +90,7 @@ let showHandle = function(form, row, conObj) {
  * @param form
  */
 let handleClose = function(form) {
-    this[form] = {}
+    this[form] = {};
 }
 
 /**
@@ -102,12 +102,12 @@ let handleClose = function(form) {
  * @param cacheListName 缓存的新增 修改的变量名 变量名！！
  */
 let handleDelete = function(id, index, tableList, deleteIdList, cacheListName) {
-    let delObj = tableList.splice(index, 1)[0]
-    let cacheList = this.cacheObject[cacheListName]
+    let delObj = tableList.splice(index, 1)[0];
+    let cacheList = this.cacheObject[cacheListName];
     if (id) {
-        deleteIdList.push(id)
+        deleteIdList.push(id);
     } else {
-        this.cacheObject[cacheListName] = cacheList.filter(item => item.fakeId !== delObj.fakeId)
+        this.cacheObject[cacheListName] = cacheList.filter(item => item.fakeId !== delObj.fakeId);
     }
 }
 
@@ -116,8 +116,8 @@ let handleDelete = function(id, index, tableList, deleteIdList, cacheListName) {
  * @param t
  */
 let initData = (t) => {
-    t.handleForm = {'attendanceList': [], 'name': '123', 'mobileNumbers': '123', 'licenseNumbers': '1'}
-    t.attendanceList.push({'id': '66666', 'cause': '原因', 'driversId': '司机id'})
+    t.handleForm = {'attendanceList': [], 'name': '123', 'mobileNumbers': '123', 'licenseNumbers': '1'};
+    t.attendanceList.push({'id': '66666', 'cause': '原因', 'driversId': '司机id'});
 }
 
 export default {
