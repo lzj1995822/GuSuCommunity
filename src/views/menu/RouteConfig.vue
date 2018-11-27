@@ -36,85 +36,111 @@
 </template>
 
 <script>
-    export default {
-        name: "RouteConfig",
-        data() {
-            return {
-                menu: [],
-                handlerVis: false, // 操作框显示控制标志
-                handlerForm: {
-                    meta: {}
-                }, //操作表单
-                classInfo: {}, //对应实体类信息
-            }
+import DynamicRoutes from '@/utils/dynamic-routes';
+export default {
+    name: "RouteConfig",
+    data() {
+        return {
+            menu: [],
+            handlerVis: false, // 操作框显示控制标志
+            handlerForm: {
+                meta: {}
+            }, //操作表单
+            classInfo: {}, //对应实体类信息
+        }
+    },
+    created() {
+        this.menu = this.$store.state.menuList;
+        this.classInfo = this.$store.state.classInfo;
+    },
+    methods: {
+        /**
+         * 过滤节点
+         * @param value
+         * @param data
+         * @returns {boolean}
+         */
+        filterNode(value, data) {
+            if (!value) return true;
+            return data.label.indexOf(value) !== -1;
         },
-        created() {
-            this.menu = this.$store.state.menuList;
-            this.classInfo = this.$store.state.classInfo;
+        /**
+         * 处理渲染的树label值
+         * @param data
+         * @returns {*}
+         */
+        labelHandler(data) {
+            return data.meta.title;
         },
-        methods: {
-            /**
-             * 过滤节点
-             * @param value
-             * @param data
-             * @returns {boolean}
-             */
-            filterNode(value, data) {
-                if (!value) return true;
-                return data.label.indexOf(value) !== -1;
-            },
-            /**
-             * 处理渲染的树label值
-             * @param data
-             * @returns {*}
-             */
-            labelHandler(data) {
-               return data.meta.title;
-            },
-            /**
-             * 树节点的内容区的渲染 Function
-             * @param h
-             * @param node
-             * @param data
-             * @param store
-             * @returns {*}
-             */
-            renderContent(h, {node, data, store}) {
-                return (
-                    <span class="custom-tree-node">
-                        <span>{node.label}</span>
-                        <span>
-                            <el-button size="mini" type="text" on-click={() => this.append(data)}>
-                                <i class="el-icon-circle-plus-outline"/>
-                            </el-button>
-                            <el-button size="mini" type="text" on-click={() => this.append(data)}>
-                                <i class="el-icon-edit"/>
-                            </el-button>
-                            <el-button size="mini" type="text" on-click={() => this.remove(node, data)}>
-                                <i class="el-icon-remove-outline"/>
-                            </el-button>
-                        </span>
+        /**
+         * 树节点的内容区的渲染 Function
+         * @param h
+         * @param node
+         * @param data
+         * @param store
+         * @returns {*}
+         */
+        renderContent(h, {node, data, store}) {
+            return (
+                <span class="custom-tree-node">
+                    <span>{node.label}</span>
+                    <span>
+                        <el-button size="mini" type="text" on-click={() => this.append(data)}>
+                            <i class="el-icon-circle-plus-outline"/>
+                        </el-button>
+                        <el-button size="mini" type="text" on-click={() => this.edit(data)}>
+                            <i class="el-icon-edit"/>
+                        </el-button>
+                        <el-button size="mini" type="text" on-click={() => this.remove(node, data)}>
+                            <i class="el-icon-remove-outline"/>
+                        </el-button>
                     </span>
-                );
-            },
-            /**
-             * 添加
-             * @param data
-             */
-            append(data) {
-                this.handlerVis = true;
-                this.handlerForm.parentId = data.id;
-            },
-            submit() {
-                this.$http("POST", `/identity/sysRoutes/`, Object.assign({},this.handlerForm)).then(data => {
-                    console.log(data)
-                })
-            },
-            cancel() {
-                this.handlerVis = false;
+                </span>
+            );
+        },
+        /**
+         * 添加
+         * @param data
+         */
+        append(data) {
+            this.handlerVis = true;
+            this.handlerForm.parentId = data.id;
+        },
+        /**
+         * 编辑
+         * @param data
+         */
+        edit(data) {
+            this.handlerVis = true;
+            this.handlerForm = JSON.parse(JSON.stringify(data));
+        },
+        /**
+         * 提交新增或者更新
+         */
+        submit() {
+            let type = "POST";
+            let path = `/identity/sysRoutes/`;
+            if (this.handlerForm.id) {
+                type = "PUT";
+                path += `${this.handlerForm.id}id`;
             }
+            this.$http(type, path, Object.assign({},this.handlerForm)).then(() => this.getLastestMenu());
+        },
+        cancel() {
+            this.handlerVis = false;
+        },
+        getLastestMenu() {
+            this.$http('POST', `/identity/sysRoutes/list`).then(data => {
+                sessionStorage.setItem("menu",JSON.stringify(data));
+                this.$store.commit("getMenu",data);
+                DynamicRoutes.transfer(data);
+                this.$router.addRoutes(data);
+                this.menu = this.$store.state.menuList;
+                this.handlerVis = false;
+            })
         }
     }
+}
 </script>
 
 <style>

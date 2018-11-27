@@ -19,6 +19,7 @@ Vue.component('icon', Icon);
 
 Vue.prototype.$http = common.http;
 Vue.prototype.$genHttp = generate;
+Vue.prototype.$copy = (target) => Object.assign({}, target);
 getRouter(router);
 
 DynamicRoutes.flushHandler(router, store);

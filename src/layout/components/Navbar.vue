@@ -60,8 +60,21 @@ export default {
     },
     computed: {
         breadList() {
+            let arr = [];
             // 如果有重定向，则是由于没有子菜单(因此过滤掉)
-            return this.$route.matched.filter(route => !route.redirect)
+            let matched = this.$route.matched.filter(route => !route.redirect)
+            console.log("123",this.$store.state.menuList,this.$route.matched)
+            this.$store.state.menuList.map(item => {
+                if(item.name == matched[0].name) {
+                    arr.push(item);
+                }
+                item.children.map(subItem => {
+                    if (subItem.name == matched[1].name) {
+                        arr.push(subItem);
+                    }
+                })
+            }); 
+            return arr;
         }
     },
     methods: {
