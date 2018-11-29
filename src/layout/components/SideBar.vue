@@ -5,13 +5,11 @@
                 <!-- 有子菜单 -->
                 <el-submenu :index="item.path" v-if="item.children&&item.children.length">
                     <template slot="title">
-                        {{item.meta.icon}}
                         <icon :name="item.meta.icon" scale="1.5"></icon>
                         <span slot="title">{{item.meta && item.meta.title}}</span>
                     </template>
-                    <el-menu-item :index="item.path+'/'+subItem.path" v-for="subItem in item.children" :key="subItem.name">
-                     {{item.meta.icon}}
-                        <icon :name="item.meta.icon" scale="1.5"></icon>
+                    <el-menu-item :index="item.path+'/'+subItem.path" v-for="subItem in item.children" :key="subItem.id">
+                        <icon :name="subItem.meta.icon" scale="1.5" style="margin-left:20px"></icon>
                         <span slot="title">{{subItem.meta && subItem.meta.title}}</span>
                     </el-menu-item>
                 </el-submenu>

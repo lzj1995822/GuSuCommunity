@@ -138,6 +138,15 @@ export default {
                 this.menu = this.$store.state.menuList;
                 this.handlerVis = false;
             })
+        },
+        remove(node, data) {
+            this.$confirm('确认删除该菜单么？', '确认信息', {
+                    distinguishCancelAndClose: true,
+                    confirmButtonText: '确认',
+                    cancelButtonText: '取消'
+                }).then(() => {
+                    this.$http('DELETE', `/identity/sysRoutes/${data.id}id`).then(() => this.getLastestMenu());
+                }).catch(action => this.$message({type: 'success', message: '取消成功'}));
         }
     }
 }

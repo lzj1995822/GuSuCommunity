@@ -32,5 +32,34 @@ export default {
             router.addRoutes(menu);
             store.commit("getMenu",menu);
         }
+        /**
+         * 同步routes
+         */
+        menu.forEach(item => {
+            router.options.routes.push({
+                path: item.path,
+                name: item.name,
+                component: item.component,
+                children: item.children
+            })
+        })
+        /**
+         * 重新获取菜单对应的class
+         */
+        let currentPath = window.location.href.split("#")[1].split("/");
+        currentPath.shift();
+        let classInfo = {};
+        menu.forEach(item => {
+            if (currentPath.length === 1 && item.path ==  ("/" + currentPath[0])) {
+                classInfo = item.sysClass;
+            } else {
+                item.children.forEach(subItem => {
+                    if (subItem.path === currentPath[1]) {
+                        classInfo = subItem.sysClass;
+                    }
+                })
+            }
+        })
+        store.commit("getClassInfo", classInfo);
     }
 }

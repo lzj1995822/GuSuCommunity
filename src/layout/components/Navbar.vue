@@ -69,7 +69,7 @@ export default {
                     arr.push(item);
                 }
                 item.children.map(subItem => {
-                    if (subItem.name == matched[1].name) {
+                    if (matched[1] && subItem.name == matched[1].name) {
                         arr.push(subItem);
                     }
                 })
