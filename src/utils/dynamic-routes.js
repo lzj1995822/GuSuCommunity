@@ -26,12 +26,13 @@ export default {
      */
     flushHandler(router, store) {
         let menu = sessionStorage.getItem('menu');
-        if (menu) {
-            menu = JSON.parse(menu);
-            this.transfer(menu);
-            router.addRoutes(menu);
-            store.commit("getMenu",menu);
+        if (!menu) {
+            return;
         }
+        menu = JSON.parse(menu);
+        this.transfer(menu);
+        router.addRoutes(menu);
+        store.commit("getMenu",menu);
         /**
          * 同步routes
          */
