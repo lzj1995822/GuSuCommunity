@@ -18,7 +18,7 @@
 
                 <el-dropdown trigger="click">
                     <span class="el-dropdown-link">
-                        <img class="person-img fl"  alt="">
+                        <img class="person-img fl"  alt="" src="">
                         <i class="person-name fl">fuCK</i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
@@ -65,15 +65,15 @@ export default {
             let matched = this.$route.matched.filter(route => !route.redirect)
             console.log("123",this.$store.state.menuList,this.$route.matched)
             this.$store.state.menuList.map(item => {
-                if(item.name == matched[0].name) {
+                if(item.name === matched[0].name) {
                     arr.push(item);
                 }
                 item.children.map(subItem => {
-                    if (matched[1] && subItem.name == matched[1].name) {
+                    if (matched[1] && subItem.name === matched[1].name) {
                         arr.push(subItem);
                     }
                 })
-            }); 
+            });
             return arr;
         }
     },

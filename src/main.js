@@ -13,7 +13,7 @@ import DynamicRoutes from '@/utils/dynamic-routes';
 
 Vue.config.productionTip = false;
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, {size: 'mini'});
 Vue.use(store);
 Vue.component('icon', Icon);
 

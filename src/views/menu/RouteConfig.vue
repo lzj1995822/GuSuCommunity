@@ -12,22 +12,22 @@
         </el-tree>
 
         <el-dialog title="路由配置" :visible.sync="handlerVis" width="30%" align="left">
-            <el-form :model="handlerForm" class="dialog-form" size="mini">
+            <el-form :model="handlerForm" class="dialog-form">
                 <template v-for="item in classInfo.properties">
                     <el-form-item v-if="item.isObject === '0'" :key="item.id" :label="item.des" :prop="item.name" :inline="true" label-width="105px">
-                        <el-input v-model="handlerForm[item.name]" v-if="item.isObject === '0'" type="text" size="small"></el-input>
+                        <el-input v-model="handlerForm[item.name]" v-if="item.isObject === '0'" type="text"></el-input>
                     </el-form-item>
                     <template v-else>
                         <el-form-item :label="item.des" :key="item.id" label-width="100px">
                         </el-form-item>
                         <el-form-item v-for="subItem in item.obj.properties" :key="subItem.id" :label="subItem.des" :prop="subItem.name" :inline="true" label-width="105px">
-                            <el-input v-model="handlerForm[item.name][subItem.name]" type="text" size="small"></el-input>
+                            <el-input v-model="handlerForm[item.name][subItem.name]" type="text"></el-input>
                         </el-form-item>
                     </template>
                 </template>
                 <el-form-item :inline="true" label-width="105px">
-                    <el-button size="mini" type="primary" @click="submit">提交</el-button>
-                    <el-button size="mini" type="danger"  @click="cancel">取消</el-button>
+                    <el-button type="primary" @click="submit">提交</el-button>
+                    <el-button type="danger"  @click="cancel">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -104,6 +104,7 @@ export default {
          */
         append(data) {
             this.handlerVis = true;
+            // this.handlerForm = {};
             this.handlerForm.parentId = data.id;
         },
         /**
