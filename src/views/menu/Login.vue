@@ -69,6 +69,7 @@ export default {
                     sessionStorage.setItem("menu",JSON.stringify(data));
                     this.$store.commit("getMenu",data);
                     DynamicRoutes.transfer(data);
+                    console.log(data, "data")
                     this.$router.addRoutes(data);
                     this.loading = true;
                     this.$router.push('Home');

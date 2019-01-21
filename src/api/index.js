@@ -41,7 +41,7 @@ service.interceptors.response.use(
             // 请求成功则只返回返回的数据，并且用promise做封装，以方便做业务逻辑的同步处理
             // 有些成功的请求并不需要弹框，还需传标志位。。。
             if (response.config.showMessage) {
-                Message.success(response.data.msg);
+                Message('success', response.data.msg);
             }
             return Promise.resolve(response.data.content);
         } else if (response.data.code === CODE_MAP.ERROR) {
@@ -53,7 +53,7 @@ service.interceptors.response.use(
     error => {
         // 处理HTTP请求错误
         Message.error('HTTP请求错误！');
-        this.router.push({path:'/login'});
+        // this.router.push({path:'/login'});
         return Promise.reject(error);
     }
 );

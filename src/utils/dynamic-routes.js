@@ -7,7 +7,7 @@ export default {
      * */
      transfer(routers) {
          routers.forEach(item => {
-            if (item.name === 'Home') {
+            if (item.componentName === 'Home') {
                 item.component = () => import(`@/layout/Layout.vue`);
             } else {
                 item.component = () => import(`@/views/menu/${item.componentName}.vue`);

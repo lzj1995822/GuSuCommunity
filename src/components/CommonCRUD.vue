@@ -98,7 +98,7 @@
             deleteRow (id) {
                 this.$confirm('确认删除？')
                     .then(_ => {
-                        this.$http(reqType.DELETE, `${this.apiRoot}/${id}`).then(_ => {
+                        this.$http(reqType.DELETE, `${this.apiRoot}/${id}id`).then(_ => {
                             this.loadTableData();
                         });
                     })
@@ -106,7 +106,7 @@
             },
             submit () {
                 let type = this.form.id ? reqType.PUT : reqType.POST;
-                let path = `${this.apiRoot}/${this.form.id || ''}`;
+                let path = `${this.apiRoot}/${this.form.id || ''}id`;
                 this.$http(type, path, Object.assign({}, this.form)).then(() => {
                     this.dialogVisible = false;
                     this.loadTableData();
