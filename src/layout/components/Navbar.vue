@@ -18,8 +18,8 @@
 
                 <el-dropdown trigger="click">
                     <span class="el-dropdown-link">
-                        <img class="person-img fl"  alt="" src="">
-                        <i class="person-name fl">fuCK</i>
+                        <img class="person-img fl"  alt="" src="../../assets/logo.png">
+                        <i class="person-name fl">{{user}}</i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item @click.native="myMessage">我的消息</el-dropdown-item>
@@ -49,6 +49,7 @@ export default {
     data() {
         return {
             msgVisible: false,
+            user: {},
             msgList: [{
                 url: '/component/test?id=12-123-sda&status=Handle',
                 msg: '新增组件测试'
@@ -97,6 +98,9 @@ export default {
             sessionStorage.removeItem('token');
             location.reload();
         }
+    },
+    mounted() {
+        this.user = sessionStorage.getItem('user');
     }
 }
 </script>
@@ -134,9 +138,12 @@ export default {
         height: 40px;
         border-radius: 50%;
         margin: 5px 10px;
+        border: 1px solid #888888;
+        box-shadow: 1px 1px 1px #999;
     }
     .person-name {
         cursor: pointer;
+        line-height: 18px;
     }
 }
 </style>

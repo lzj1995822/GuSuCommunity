@@ -104,3 +104,13 @@ export const common = new Proxy({}, {
         };
     }
 });
+
+export const ht =  (method, url, data, showMessage ) => {
+
+    if (!data) {
+        data = {};
+        showMessage = false;
+        return service({method, url, data, showMessage});
+    }
+    return service({method, url, data, showMessage});
+}

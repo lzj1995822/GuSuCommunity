@@ -8,7 +8,8 @@
                 :value="item.id">
             </el-option>
         </el-select>
-        <div id="pmBox" v-if="projectId != ''">
+        <transition name="fade">
+            <div id="pmBox" v-show="projectId != ''">
             <div id="pmBox_left"></div>
             <div id="pmBox_right">
                 <el-card class="card" style="background-color: aquamarine">
@@ -94,6 +95,7 @@
 
             </div>
         </div>
+        </transition>
     </section>
 </template>
 
@@ -120,14 +122,14 @@
         },
         methods: {
             loadProjects() {
-                this.$http('post','/identity/projectInfo/list').then(
+                this.$http('post','/identity/projectInfo/list', false).then(
                     data => {
                         this.options = data;
                     }
                 )
             },
             loadData() {
-                axios.get(`http://122.97.218.162:18008/JRPSuperviseService/ThirdParty.svc/getRaiseDustNow?id=${this.projectId}`).then(
+                axios.get(`http://122.97.218.162:18008/JRPSuperviseService/ThirdParty.svc/getRaiseDustNow?id=${this.projectId}`, false).then(
                     res => {
                         let dataX = [];
                         let dataY = [];
@@ -156,7 +158,8 @@
                 let myChart = echarts.init(document.getElementById('pmBox_left'));
                 let option = {
                     title: {
-                        text: 'pm2.5变化趋势图',
+                        text: 'PM 2.5近8小时变化图',
+                        top: 0
                     },
                     tooltip: {
                         trigger: 'axis'
@@ -165,14 +168,13 @@
                         data: ['PM2.5']
                     },
                     grid: {
-                        left: '15%'
+                        left: '10%'
                     },
                     toolbox: {
                         show: true,
                         feature: {
                             mark: { show: true },
                             dataView: { show: true, readOnly: false },
-                            magicType: { show: true, type: ['line', 'bar'] },
                             restore: { show: true },
                             saveAsImage: { show: true }
                         }
@@ -220,7 +222,11 @@
             }
         },
         mounted() {
-            this.loadProjects()
+            this.loadProjects();
+            if (this.$store.state.projectId) {
+                this.projectId = this.$store.state.projectId;
+                this.loadData();
+            }
         }
     }
 </script>
@@ -246,12 +252,13 @@
     #pmBox_left {
         margin: 0;
         padding: 0;
-        width: 60%;
+        width: 40rem;
         height: 400px;
         background-size: cover;
         display: inline-block;
     }
     #pmBox_left div{
+        width: 600px;
         height: 400px;
     }
     #pmBox_right {
@@ -262,10 +269,24 @@
         display: inline-block;
     }
     .card {
-        width: 30%;
-        height: 18%;
+        width: 25%;
+        height: 20%;
         float: left;
-        margin: 2% 8% 2% 8%;
+        margin: 2% 8% 2% 12%;
+    }
+    /* 开始过渡阶段,动画出去阶段 */
+    .fade-enter-active,.fade-leave-active{
+        transition: all 0.5s ease-out;
+    }
+    /* 进入开始 */
+    .fade-enter{
+        transform: rotateY(90deg);
+        opacity: 0;
+    }
+    /* 出去终点 */
+    .fade-leave-active{
+        transform: rotateY(-90deg);
+        opacity: 0;
     }
 </style>
 <style>

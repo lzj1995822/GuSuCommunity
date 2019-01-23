@@ -8,20 +8,20 @@
                 <span class="svg-container svg-container_login">
                   <icon name="user" scale="2.5"></icon>
                 </span>
-                <el-input name="code" type="text" v-model="loginForm.code" autoComplete="on" placeholder="code"></el-input>
+                <el-input name="code" size="small" type="text" v-model="loginForm.code" autoComplete="on" placeholder="code"></el-input>
             </el-form-item>
 
             <el-form-item prop="password">
                 <span class="svg-container">
                   <icon name="password" scale="2"/>
                 </span>
-                <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="password"></el-input>
+                <el-input name="password" size="small" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="password"></el-input>
                 <span class="show-pwd" @click="showPwd">
                     <icon name="eye" scale="2"/>
                 </span>
             </el-form-item>
 
-            <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">登 录</el-button>
+            <el-button type="primary" size="small" style="width:100%;margin:15px 0;" :loading="loading" @click.native.prevent="handleLogin">登 录</el-button>
 
         </el-form>
 
@@ -64,12 +64,12 @@ export default {
         handleLogin () {
             this.$http('POST', `/identity/principal/login`, this.loginForm).then(data => {
                 sessionStorage.setItem('token', data);
+                sessionStorage.setItem('user', this.loginForm.code);
             }).then(() => {
                 this.$http('POST', `/identity/sysRoutes/list`, false).then(data => {
                     sessionStorage.setItem("menu",JSON.stringify(data));
                     this.$store.commit("getMenu",data);
                     DynamicRoutes.transfer(data);
-                    console.log(data, "data")
                     this.$router.addRoutes(data);
                     this.loading = true;
                     this.$router.push('Home');
@@ -94,7 +94,6 @@ export default {
     .login-container {
         .el-input {
             display: inline-block;
-            height: 47px;
             width: 85%;
             input {
                 background: transparent;
@@ -103,7 +102,6 @@ export default {
                 border-radius: 0;
                 padding: 12px 5px 12px 15px;
                 color: $light_gray;
-                height: 47px;
                 &:-webkit-autofill {
                     -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
                     -webkit-text-fill-color: #fff !important;
@@ -128,16 +126,19 @@ export default {
         position: fixed;
         height: 100%;
         width: 100%;
-        background-color: $bg;
+        //<!--background-color: $bg;-->
+        background-image: url("../../assets/loginBg.png");
+        background-size: cover;
         .login-form {
             position: absolute;
             left: 0;
             right: 0;
-            width: 430px;
-            height: 400px;
+            width: 380px;
+            height: 330px;
             padding: 35px 35px 15px 35px;
-            margin: 160px auto;
-            background-color: rgba(255,255,255,1);
+            margin: 15% auto;
+            background-color: rgba(255,255,255,.9);
+            box-shadow: 1px 1px 1px gray;
             border-radius: 5px;
         }
         .tips {
@@ -163,7 +164,7 @@ export default {
         .title-container {
             position: relative;
             .title {
-                font-size: 26px;
+                font-size: 24px;
                 font-weight: 400;
                 color: $light_gray;
                 margin: 0px auto 40px auto;
@@ -191,5 +192,8 @@ export default {
             right: 35px;
             bottom: 28px;
         }
+    }
+    svg {
+        -webkit-margin-before: 4px;
     }
 </style>

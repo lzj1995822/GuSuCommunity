@@ -4,7 +4,7 @@
         <p class="clear-float">&nbsp;</p>
         <el-table :data="tableData" v-loading="loading" border>
             <el-table-column v-for="item in columns" :key="item.name" :prop="item.name" :label="item.des"
-                             :width="item.width || ''" align="center"></el-table-column>
+                             :width="item.width || ''" :formatter="item.formatter" align="center"></el-table-column>
             <el-table-column label="操作" align="center">
                 <template slot-scope="scope">
                     <el-button type="text" @click="edit(scope.row)">编辑</el-button>
@@ -15,12 +15,12 @@
         </el-table>
         <el-pagination style="text-align: right;margin-top: 20px;"
                        :total="pageable.total" :current-page.sync="pageable.currentPage" :page-size.sync="pageable.pageSize"
-                       @current-change="loadTableData" @size-change="loadTableData" layout="total, sizes, prev, pager, next">
+                       @current-change="currentChange" @size-change="sizeChange" layout="total, sizes, prev, pager, next">
         </el-pagination>
         <el-dialog
             title="新增"
             :visible.sync="dialogVisible"
-            width="30%"
+            width="50%"
             align="left"
             :before-close="handleClose">
             <el-form :inline="true" :model="form" ref="form" class="demo-form-inline" label-width="100px">
@@ -29,6 +29,16 @@
                     <el-select v-model="form[item.name]" v-else-if="item.type === 'select'">
                         <el-option v-for="opItem in item.options" :value="opItem.value" :label="opItem.label" :key="opItem.value"></el-option>
                     </el-select>
+                    <el-radio-group v-if="item.type === 'radio'" v-model="form[item.name]" style="width: 178px" >
+                        <el-radio :label="1">是</el-radio>
+                        <el-radio :label="0">否</el-radio>
+                    </el-radio-group>
+                    <el-date-picker v-if="item.type === 'date'"
+                        v-model="form[item.name]"
+                        type="date"
+                        placeholder="选择日期"
+                        style="width: 178px">
+                    </el-date-picker>
                     <!--预留富文本编辑-->
                     <el-upload
                         v-else-if="item.type === 'img'"
@@ -78,10 +88,18 @@
             };
         },
         methods: {
+            currentChange(value) {
+                let path = `${this.apiRoot}/page?page=${value - 1}&size=${this.pageable.pageSize}`;
+                this.loadTableData(path)
+            },
+            sizeChange(value) {
+                let path = `${this.apiRoot}/page?page=0&size=${value}`;
+                this.loadTableData(path)
+            },
             // 获取表格数据
-            loadTableData () {
+            loadTableData (path) {
                 this.loading = true;
-                this.$http(reqType.POST, `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`, false).then(
+                this.$http(reqType.POST, path, false).then(
                     data => {
                         this.tableData = data.content;
                         this.pageable.total = data.totalElements;
@@ -109,7 +127,8 @@
                 let path = `${this.apiRoot}/${this.form.id || ''}id`;
                 this.$http(type, path, Object.assign({}, this.form)).then(() => {
                     this.dialogVisible = false;
-                    this.loadTableData();
+                    let path = `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;
+                    this.loadTableData(path);
                     this.from = {};
                 });
             },
@@ -126,7 +145,8 @@
             }
         },
         created () {
-            this.loadTableData();
+            let path = `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;
+            this.loadTableData(path);
         }
     };
 </script>

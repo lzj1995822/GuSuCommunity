@@ -9,7 +9,7 @@
                         <span slot="title">{{item.meta && item.meta.title}}</span>
                     </template>
                     <el-menu-item :index="item.path+'/'+subItem.path" v-for="subItem in item.children" :key="subItem.id">
-                        <icon :name="subItem.meta.icon" scale="1.5" style="margin-left:20px"></icon>
+                        <icon :name="subItem.meta.icon" scale="1.5"></icon>
                         <span slot="title">{{subItem.meta && subItem.meta.title}}</span>
                     </el-menu-item>
                 </el-submenu>
@@ -53,6 +53,10 @@
     }
     .el-menu-personal {
         height: 100%;
+        text-align: left;
+    }
+    svg {
+        margin: 0 5px 0 20px;
     }
 </style>
 
