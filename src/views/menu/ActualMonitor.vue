@@ -35,6 +35,9 @@
         },
         watch: {
             filterText(val) {
+                if (!val) {
+                    this.loadTreeData();
+                }
                 this.$refs.tree.filter(val);
             }
         },

@@ -231,7 +231,7 @@
         height: 610px;
     }
     .search-input {
-        position: absolute;
+        position: absolute !important;
         z-index: 2000;
         top: 80px;
         left: 230px;
