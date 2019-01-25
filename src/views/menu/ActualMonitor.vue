@@ -98,7 +98,8 @@
                 const IP_PORT = "http://122.97.218.162:18080";
                 const APP_KEY = "a592d676";
                 const opUserUuid = 'c26a811c141a11e79aeeb32ef95273f2';
-                const netZoneUuid = 'f5816cf43fcc41d880d9f636fa8bc443';
+                // const netZoneUuid = 'f5816cf43fcc41d880d9f636fa8bc443';
+                const netZoneUuid = '5b994421aced4e2d9a76179e8cc70734';
                 let self = this;
                 $.ajax({
                     url: IP_PORT + "/openapi/service/vss/preview/getPreviewParamByCameraUuid?token=" + self.getSinglePreviewToken(time, cameraUuid),

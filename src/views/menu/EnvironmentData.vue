@@ -135,7 +135,7 @@
                         let dataY = [];
                         res.data.data2.forEach( item => {
                             dataY.push(item.value);
-                            dataX.push(item.time)
+                            dataX.push(item.time);
                         })
                         this.initPM25(dataX, dataY);
                         this.loadCurrentData(res.data.data1);
