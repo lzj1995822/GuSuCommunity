@@ -22,7 +22,7 @@
             </el-form>
         </div>
         <div class="handler-btn">
-            <el-button type="primary" plain @click="dialogVisible = true;form = {}">新增</el-button>
+            <el-button type="primary" plain @click="add">新增</el-button>
             <el-button type="success" plain @click="edit">编辑</el-button>
             <el-button type="danger" plain @click="deleteRow">删除</el-button>
             <slot name="header-btn" :selected="selected"></slot>
@@ -52,17 +52,18 @@
         :before-close="handleClose">
         <el-form :inline="true" :model="form" ref="form" class="demo-form-inline" label-width="100px">
             <el-form-item v-for="item in formColumns" :key="item.des" :label="item.des">
-                <el-input v-model="form[item.name]" v-if="item.type === 'string'"></el-input>
-                <el-select v-model="form[item.name]" v-else-if="item.type === 'select'">
+                <el-input v-model="form[item.name]" v-if="item.type === 'string'" :disabled="item.disabled"></el-input>
+                <el-select v-model="form[item.name]" v-else-if="item.type === 'select'" :disabled="item.disabled">
                     <el-option v-for="opItem in item.options" :value="opItem.value" :label="opItem.label" :key="opItem.value"></el-option>
                 </el-select>
-                <el-radio-group v-if="item.type === 'radio'" v-model="form[item.name]" style="width: 178px" >
+                <el-radio-group v-if="item.type === 'radio'" v-model="form[item.name]" :disabled="item.disabled" style="width: 178px" >
                     <el-radio :label="1">是</el-radio>
                     <el-radio :label="0">否</el-radio>
                 </el-radio-group>
                 <el-date-picker v-if="item.type === 'date'"
                                 v-model="form[item.name]"
                                 type="date"
+                                :disabled="item.disabled"
                                 placeholder="选择日期"
                                 style="width: 178px">
                 </el-date-picker>
@@ -160,7 +161,16 @@
                     this.loading = false;
                 });
             },
-            edit () {
+            add() {
+                this.dialogVisible = true;
+                this.form = {};
+                this.formColumns.forEach((item) => {
+                    if (item.value) {
+                        this.form[item.name] = item.value;
+                    }
+                });
+            },
+            edit() {
                 if (this.validateRows()) {
                     return;
                 }

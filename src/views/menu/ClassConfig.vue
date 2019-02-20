@@ -32,6 +32,14 @@ export default {
             dialogVisible: false,
             propertyColumns: [
                 {
+                    name: "classId",
+                    type: 'string',
+                    des: '所属类ID',
+                    width: '300',
+                    disabled: true,
+                    value: ''
+                },
+                {
                     name: "name",
                     type: 'string',
                     des: "属性名",
@@ -79,7 +87,9 @@ export default {
                     });
                 return;
             }
-            this.queryColumns[0].value = data[0].id;
+            let classId = data[0].id;
+            this.queryColumns[0].value = classId;
+            this.propertyColumns[0].value = classId;
             this.title = `${data[0].name}类-属性配置`;
             this.dialogVisible = true;
         },
