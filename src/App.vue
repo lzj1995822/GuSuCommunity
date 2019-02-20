@@ -26,18 +26,10 @@ export default {
     text-align: center;
     color: #2c3e50;
   }
-  /* 开始过渡阶段,动画出去阶段 */
-  .fade-enter-active,.fade-leave-active{
-      transition: all 0.5s ease-out;
+  .fade-enter-active, .fade-leave-active {
+      transition: opacity .5s;
   }
-  /* 进入开始 */
-  .fade-enter{
-      transform: rotateY(90deg);
-      opacity: 0;
-  }
-  /* 出去终点 */
-  .fade-leave-active{
-      transform: rotateY(-90deg);
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
       opacity: 0;
   }
   .el-input--small .el-input__inner {

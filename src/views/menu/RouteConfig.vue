@@ -1,5 +1,6 @@
 <template>
     <section id="route_config">
+        <el-button style="margin-bottom: 10px;" type="primary" size="mini" icon="el-icon-circle-plus-outline" @click="addFirstClassMenu">一级菜单</el-button>
         <el-tree
             class="filter-tree"
             :data="menu"
@@ -12,7 +13,7 @@
         </el-tree>
 
         <el-dialog title="路由配置" :visible.sync="handlerVis" width="30%" align="left">
-            <el-form :model="handlerForm" class="dialog-form">
+            <el-form :model="handlerForm" class="dialog-form" ref="handlerForm">
                 <template v-for="item in classInfo.properties">
                     <el-form-item v-if="item.isObject === '0'" :key="item.id" :label="item.des" :prop="item.name" :inline="true" label-width="105px">
                         <el-input v-model="handlerForm[item.name]" v-if="item.isObject === '0'" type="text"></el-input>
@@ -54,6 +55,11 @@ export default {
         this.classInfo = this.$store.state.classInfo;
     },
     methods: {
+        addFirstClassMenu() {
+            this.handlerVis = true;
+            this.$refs.handlerForm.resetFields();
+            this.handlerForm.meta = {};
+        },
         /**
          * 过滤节点
          * @param value
@@ -104,7 +110,10 @@ export default {
          */
         append(data) {
             this.handlerVis = true;
-            // this.handlerForm = {};
+            this.$nextTick(()=> {
+                this.$refs.handlerForm.resetFields();
+            })
+            this.handlerForm.meta = {};
             this.handlerForm.parentId = data.id;
         },
         /**
@@ -159,6 +168,7 @@ export default {
 }
 #route_config {
     padding: 20px 0 0 20px;
+    text-align: right;
     width: 40%;
 }
 .custom-tree-node {
