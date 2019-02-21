@@ -22,9 +22,9 @@
             </el-form>
         </div>
         <div class="handler-btn">
-            <el-button type="primary" plain @click="add">新增</el-button>
-            <el-button type="success" plain @click="edit">编辑</el-button>
-            <el-button type="danger" plain @click="deleteRow">删除</el-button>
+            <el-button v-if="addBtnVis" type="primary" plain @click="add">新增</el-button>
+            <el-button v-if="editBtnVis" type="success" plain @click="edit">编辑</el-button>
+            <el-button v-if="delBtnVis" type="danger" plain @click="deleteRow">删除</el-button>
             <slot name="header-btn" :selected="selected"></slot>
         </div>
         <p class="clear-float">&nbsp;</p>
@@ -92,6 +92,19 @@
     export default {
         name: 'CommonCRUD',
         props: {
+            //显示按钮是否显示
+            addBtnVis:{
+                type:Boolean,
+                default :true
+            },
+            editBtnVis:{
+                type:Boolean,
+                default :true
+            },
+            delBtnVis:{
+                type:Boolean,
+                default :true
+            },
             // 表格字段显示配置
             columns: Array,
             // 请求根路径，对应后台Controller @RequestMapping注解的值
@@ -127,7 +140,9 @@
                 form: {},
                 imgUrl: '',
                 selected: [],
-                queryForm: {}
+                queryForm: {
+
+                }
             };
         },
         computed: {
