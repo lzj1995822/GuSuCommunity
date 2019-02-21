@@ -51,8 +51,8 @@ export default {
         }
     },
     created() {
-        this.menu = this.$store.state.menuList;
         this.classInfo = this.$store.state.classInfo;
+        this.loadAllMenu();
     },
     methods: {
         addFirstClassMenu() {
@@ -157,7 +157,12 @@ export default {
                 }).then(() => {
                     this.$http('DELETE', `/identity/sysRoutes/${data.id}id`).then(() => this.getLastestMenu());
                 }).catch(action => this.$message({type: 'success', message: '取消成功'}));
-        }
+        },
+        loadAllMenu() {
+            this.$http('POST', `/identity/sysRoutes/list`, false).then(data => {
+                this.menu = data;
+            });
+        },
     }
 }
 </script>
