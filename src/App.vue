@@ -36,4 +36,7 @@ export default {
       height: 32px;
       line-height: 46px;
   }
+    .el-select {
+        width: 178px !important;
+    }
 </style>

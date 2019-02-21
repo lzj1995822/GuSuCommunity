@@ -53,7 +53,7 @@
         <el-form :inline="true" :model="form" ref="form" class="demo-form-inline" label-width="100px">
             <el-form-item v-for="item in formColumns" :key="item.des" :label="item.des">
                 <el-input v-model="form[item.name]" v-if="item.type === 'string'" :disabled="item.disabled"></el-input>
-                <el-select v-model="form[item.name]" v-else-if="item.type === 'select'" :disabled="item.disabled">
+                <el-select v-model="form[item.name]" v-else-if="item.type === 'select'" filterable :disabled="item.disabled">
                     <el-option v-for="opItem in item.options" :value="opItem.value" :label="opItem.label" :key="opItem.value"></el-option>
                 </el-select>
                 <el-radio-group v-if="item.type === 'radio'" v-model="form[item.name]" :disabled="item.disabled" style="width: 178px" >
@@ -130,6 +130,11 @@
                 queryForm: {}
             };
         },
+        computed: {
+            path() {
+                return `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;
+            }
+        },
         methods: {
             validateRows() {
                 if (this.selected.length !== 1) {
@@ -177,11 +182,14 @@
                 this.form = Object.assign({}, this.selected[0]);
                 this.dialogVisible = true;
             },
-            deleteRow (id) {
+            deleteRow() {
+                if (this.validateRows()) {
+                    return;
+                }
                 this.$confirm('确认删除？')
                     .then(_ => {
-                        this.$http(reqType.DELETE, `${this.apiRoot}/${id}id`).then(_ => {
-                            this.loadTableData();
+                        this.$http(reqType.DELETE, `${this.apiRoot}/${this.selected[0].id}id`).then(_ => {
+                            this.loadTableData(this.path);
                         });
                     })
                     .catch(_ => {});
