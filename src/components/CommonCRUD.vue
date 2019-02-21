@@ -29,6 +29,8 @@
         </div>
         <p class="clear-float">&nbsp;</p>
         <el-table :data="tableData" v-loading="loading" border
+                  ref="table"
+                  @row-click="rowClick"
                   :header-cell-style="{'background-color': '#fafafa','color': 'rgb(80, 80, 80)','border-bottom': '1px rgba(64, 158, 255, .7) solid'}"
                   @selection-change="handleSelectionChange">
             <el-table-column
@@ -136,6 +138,9 @@
             }
         },
         methods: {
+            rowClick(row) {
+                this.$refs.table.toggleRowSelection(row)
+            },
             validateRows() {
                 if (this.selected.length !== 1) {
                     this.$message({

@@ -140,7 +140,7 @@ export default {
             this.handlerVis = false;
         },
         getLastestMenu() {
-            this.$http('POST', `/identity/sysRoutes/list`).then(data => {
+            this.$http('POST', `/identity/roleMenu/menu`).then(data => {
                 sessionStorage.setItem("menu",JSON.stringify(data));
                 this.$store.commit("getMenu",data);
                 DynamicRoutes.transfer(data);
