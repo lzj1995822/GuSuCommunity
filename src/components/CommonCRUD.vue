@@ -15,6 +15,14 @@
                                     v-model="queryForm[item.name]"
                                     type="date"
                                     placeholder="选择日期"
+                                    value-format="yyyy-MM-dd"
+                                    style="width: 178px">
+                    </el-date-picker>
+                    <el-date-picker v-if="item.type === 'datetime'"
+                                    v-model="queryForm[item.name]"
+                                    type="datetime"
+                                    value-format="yyyy-MM-ddTHH:mm:ss"
+                                    placeholder="选择日期"
                                     style="width: 178px">
                     </el-date-picker>
                 </el-form-item>
@@ -22,9 +30,9 @@
             </el-form>
         </div>
         <div class="handler-btn">
-            <el-button type="primary" plain @click="add">新增</el-button>
-            <el-button type="success" plain @click="edit">编辑</el-button>
-            <el-button type="danger" plain @click="deleteRow">删除</el-button>
+            <el-button v-if="addBtnVis" type="primary" plain @click="add">新增</el-button>
+            <el-button v-if="editBtnVis" type="success" plain @click="edit">编辑</el-button>
+            <el-button v-if="delBtnVis" type="danger" plain @click="deleteRow">删除</el-button>
             <slot name="header-btn" :selected="selected"></slot>
         </div>
         <p class="clear-float">&nbsp;</p>
@@ -94,6 +102,19 @@
     export default {
         name: 'CommonCRUD',
         props: {
+            //显示按钮是否显示
+            addBtnVis:{
+                type:Boolean,
+                default :true
+            },
+            editBtnVis:{
+                type:Boolean,
+                default :true
+            },
+            delBtnVis:{
+                type:Boolean,
+                default :true
+            },
             // 表格字段显示配置
             columns: Array,
             // 请求根路径，对应后台Controller @RequestMapping注解的值
@@ -129,7 +150,9 @@
                 form: {},
                 imgUrl: '',
                 selected: [],
-                queryForm: {}
+                queryForm: {
+
+                }
             };
         },
         computed: {
@@ -161,6 +184,9 @@
             // 获取表格数据
             loadTableData (path) {
                 this.loading = true;
+                this.sortColumns.forEach((item) => {
+                    path += `&sort=${item.name},${item.type}`;
+                });
                 this.$http(reqType.POST, path, this.queryForm, false).then(
                     data => {
                         this.tableData = data.content;
