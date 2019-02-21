@@ -66,7 +66,7 @@ export default {
                 sessionStorage.setItem('token', data);
                 sessionStorage.setItem('user', this.loginForm.code);
             }).then(() => {
-                this.$http('POST', `/identity/sysRoutes/list`, false).then(data => {
+                this.$http('GET', `/identity/roleMenu/menu`, false).then(data => {
                     sessionStorage.setItem("menu",JSON.stringify(data));
                     this.$store.commit("getMenu",data);
                     DynamicRoutes.transfer(data);
