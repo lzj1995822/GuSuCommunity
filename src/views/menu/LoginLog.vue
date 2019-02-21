@@ -1,7 +1,7 @@
 <template>
     <section>
         <CommonCRUD :queryFormColumns="queryColumns" :addBtnVis="false" :editBtnVis="false" :delBtnVis="false":columns="$store.state.classInfo.properties" apiRoot="/identity/sysLoginLog"
-                    :formColumns="formColumns">
+                    :formColumns="formColumns" :sortColumns="sortColumns">
         </CommonCRUD>
         <!--<CommonCRUD :columns="$store.state.classInfo.properties" apiRoot="/identity/sysClass" :formColumns="$store.state.classInfo.properties"></CommonCRUD>-->
     </section>
@@ -16,21 +16,26 @@
                 formColumns: [],
                 queryColumns:[
                     {
-                        des: '开始时间',
-                        name: 'loginTime',
-                        type: 'date'
-                    },
-                    {
-                        des: '结束时间',
-                        name: 'loginTime',
-                        type: 'date'
-                    },
-                    {
                         des: '姓名',
                         name: 'userName',
                         type: 'string'
+                    },
+                    {
+                        des: '开始时间',
+                        name: 'startTime',
+                        type: 'datetime'
+                    },
+                    {
+                        des: '结束时间',
+                        name: 'endTime',
+                        type: 'datetime'
                     }
-
+                ],
+                sortColumns: [
+                    {
+                        name: 'loginTime',
+                        type: 'desc'
+                    }
                 ]
             }
         },

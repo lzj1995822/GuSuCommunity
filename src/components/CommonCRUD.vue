@@ -15,6 +15,14 @@
                                     v-model="queryForm[item.name]"
                                     type="date"
                                     placeholder="选择日期"
+                                    value-format="yyyy-MM-dd"
+                                    style="width: 178px">
+                    </el-date-picker>
+                    <el-date-picker v-if="item.type === 'datetime'"
+                                    v-model="queryForm[item.name]"
+                                    type="datetime"
+                                    value-format="yyyy-MM-ddTHH:mm:ss"
+                                    placeholder="选择日期"
                                     style="width: 178px">
                     </el-date-picker>
                 </el-form-item>
@@ -171,6 +179,9 @@
             // 获取表格数据
             loadTableData (path) {
                 this.loading = true;
+                this.sortColumns.forEach((item) => {
+                    path += `&sort=${item.name},${item.type}`;
+                });
                 this.$http(reqType.POST, path, this.queryForm, false).then(
                     data => {
                         this.tableData = data.content;
