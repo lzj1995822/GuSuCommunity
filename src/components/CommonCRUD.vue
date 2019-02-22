@@ -54,14 +54,14 @@
                        @current-change="currentChange" @size-change="sizeChange" layout="total, sizes, prev, pager, next">
         </el-pagination>
         <el-dialog
-        title="新增"
+        :title="title"
         :visible.sync="dialogVisible"
         width="50%"
         align="left"
         :modal-append-to-body='false'
         :before-close="handleClose">
-        <el-form :inline="true" :model="form" ref="form" class="demo-form-inline" label-width="100px">
-            <el-form-item v-for="item in formColumns" :key="item.des" :label="item.des">
+        <el-form :inline="true" :model="form" :rules="rules" ref="form" class="demo-form-inline" label-width="100px">
+            <el-form-item v-for="item in formColumns" :key="item.des" :label="item.des" :prop="item.name" >
                 <el-input v-model="form[item.name]" v-if="item.type === 'string'" :disabled="item.disabled"></el-input>
                 <el-select v-model="form[item.name]" v-else-if="item.type === 'select'" filterable :disabled="item.disabled">
                     <el-option v-for="opItem in item.options" :value="opItem.value" :label="opItem.label" :key="opItem.value"></el-option>
@@ -90,8 +90,8 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button type="primary" :loading="submitLoading" @click="submit">确 定</el-button>
-            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" :loading="submitLoading" @click="submit('form')">确 定</el-button>
+            <el-button @click="handleClose">取 消</el-button>
         </div>
     </el-dialog>
     </div>
@@ -151,7 +151,9 @@
                 imgUrl: '',
                 selected: [],
                 queryForm: {},
-                submitLoading: false
+                submitLoading: false,
+                rules: {},
+                title: ''
             };
         },
         computed: {
@@ -198,6 +200,7 @@
                 });
             },
             add() {
+                this.title='新增'
                 this.dialogVisible = true;
                 this.form = {};
                 this.formColumns.forEach((item) => {
@@ -207,6 +210,7 @@
                 });
             },
             edit() {
+                this.title='编辑'
                 if (this.validateRows()) {
                     this.form = Object.assign({}, this.selected[0]);
                     this.dialogVisible = true;
@@ -224,24 +228,33 @@
                     })
                     .catch(_ => {});
             },
-            submit () {
-                this.submitLoading = true;
-                this.$nextTick(() => {
-                    let type = this.form.id ? reqType.PUT : reqType.POST;
-                    let path = `${this.apiRoot}/${this.form.id ? this.form.id + 'id' : ''}`;
-                    this.$http(type, path, Object.assign({}, this.form)).then(() => {
-                        this.submitLoading = false;
-                        this.dialogVisible = false;
-                        let path = `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;
-                        this.loadTableData(path);
-                        this.from = {};
-                    });
-                })
+            submit (formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.submitLoading = true;
+                        this.$nextTick(() => {
+                            let type = this.form.id ? reqType.PUT : reqType.POST;
+                            let path = `${this.apiRoot}/${this.form.id ? this.form.id + 'id' : ''}`;
+                            this.$http(type, path, Object.assign({}, this.form)).then(() => {
+                                this.submitLoading = false;
+                                this.dialogVisible = false;
+                                let path = `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;
+                                this.loadTableData(path);
+                                this.from = {};
+                            });
+                        })
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
             },
             handleClose (done) {
                 this.$confirm('确认关闭？')
                     .then(_ => {
                         this.from = {};
+                        this.$refs['form'].resetFields();
+                        this.dialogVisible = false;
                         done();
                     })
                     .catch(_ => {});
@@ -267,12 +280,34 @@
                 this.pageable.pageSize = 10;
                 let path = `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;
                 this.loadTableData(path);
+            },
+            //生成验证策略
+            validationRules(){
+                console.log(this.formColumns)
+                this.formColumns.forEach((item) => {
+                    this.rules[item.name] = [];
+                    if (item.triggerCheck) {
+                        if (item.required){
+                            this.rules[item.name].push({required: true, message: `请输入${item.des}`, trigger: item.triggerCheck});
+                        }
+                        if (item.min && !item.max){
+                            this.rules[item.name].push({min:Number(item.min), message: `输入最少${item.min}位`, trigger: item.triggerCheck});
+                        }
+                        if (item.min && item.max){
+                            this.rules[item.name].push({min:Number(item.min),max:Number(item.max), message: `请输入${item.min}位到${item.max}位`, trigger: item.triggerCheck});
+                        }
+                        if (item.max && !item.min){
+                            this.rules[item.name].push({max:Number(item.max), message: `输入最多${item.max}位`, trigger: item.triggerCheck});
+                        }
+                    }
+                });
             }
         },
         created () {
             let path = `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;
             this.defaultRequestConfig(path);
             this.loadTableData(path);
+            this.validationRules();
         }
     };
 </script>

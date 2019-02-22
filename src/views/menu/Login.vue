@@ -54,7 +54,7 @@ export default {
             },
             passwordType: 'password',
             loading: false,
-            showDialog: false
+            showDialog: false,
         };
     },
     methods: {
@@ -128,7 +128,7 @@ export default {
         height: 100%;
         width: 100%;
         //<!--background-color: $bg;-->
-        background-image: url("../../assets/loginBg.png");
+        background-image: url("../../../static/img/gusu.png");
         background-size: cover;
         .login-form {
             position: absolute;
@@ -138,7 +138,7 @@ export default {
             height: 330px;
             padding: 35px 35px 15px 35px;
             margin: 15% auto;
-            background-color: rgba(255,255,255,.9);
+            background-color: rgba(255,255,255, .8);
             box-shadow: 1px 1px 1px gray;
             border-radius: 5px;
         }

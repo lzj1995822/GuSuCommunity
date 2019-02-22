@@ -58,7 +58,34 @@ export default {
                     name: "sort",
                     type: 'string',
                     des: "排序",
+                },
+                {
+                    name: "required",
+                    type: 'string',
+                    des: "是否必填",
+                },
+                {
+                    name: "triggerCheck",
+                    type: 'string',
+                    des: "触发类型",
                 }
+                ,
+                {
+                    name: "min",
+                    type: 'string',
+                    des: "最小长度",
+                }
+                ,
+                {
+                    name: "max",
+                    type: 'string',
+                    des: "最大长度",
+                },
+                {
+                    name: "typeCheck",
+                    type: 'string',
+                    des: "类型验证",
+                },
             ],
             sortColumns: [
                 {
