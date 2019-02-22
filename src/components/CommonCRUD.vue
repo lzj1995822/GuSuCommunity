@@ -90,7 +90,7 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="submit">确 定</el-button>
+            <el-button type="primary" :loading="submitLoading" @click="submit">确 定</el-button>
             <el-button @click="dialogVisible = false">取 消</el-button>
         </div>
     </el-dialog>
@@ -150,9 +150,8 @@
                 form: {},
                 imgUrl: '',
                 selected: [],
-                queryForm: {
-
-                }
+                queryForm: {},
+                submitLoading: false
             };
         },
         computed: {
@@ -172,6 +171,7 @@
                     });
                     return false;
                 }
+                return true;
             },
             currentChange(value) {
                 let path = `${this.apiRoot}/page?page=${value - 1}&size=${this.pageable.pageSize}`;
@@ -208,13 +208,12 @@
             },
             edit() {
                 if (this.validateRows()) {
-                    return;
+                    this.form = Object.assign({}, this.selected[0]);
+                    this.dialogVisible = true;
                 }
-                this.form = Object.assign({}, this.selected[0]);
-                this.dialogVisible = true;
             },
             deleteRow() {
-                if (this.validateRows()) {
+                if (!this.validateRows()) {
                     return;
                 }
                 this.$confirm('确认删除？')
@@ -226,14 +225,18 @@
                     .catch(_ => {});
             },
             submit () {
-                let type = this.form.id ? reqType.PUT : reqType.POST;
-                let path = `${this.apiRoot}/${this.form.id ? this.form.id + 'id' : ''}`;
-                this.$http(type, path, Object.assign({}, this.form)).then(() => {
-                    this.dialogVisible = false;
-                    let path = `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;
-                    this.loadTableData(path);
-                    this.from = {};
-                });
+                this.submitLoading = true;
+                this.$nextTick(() => {
+                    let type = this.form.id ? reqType.PUT : reqType.POST;
+                    let path = `${this.apiRoot}/${this.form.id ? this.form.id + 'id' : ''}`;
+                    this.$http(type, path, Object.assign({}, this.form)).then(() => {
+                        this.submitLoading = false;
+                        this.dialogVisible = false;
+                        let path = `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;
+                        this.loadTableData(path);
+                        this.from = {};
+                    });
+                })
             },
             handleClose (done) {
                 this.$confirm('确认关闭？')
@@ -297,7 +300,7 @@
     .common-query .el-form--inline .el-form-item {
         margin: 0;
     }
-    .common-query i {
+    .common-crud i {
         font-size: 12px;
     }
 </style>

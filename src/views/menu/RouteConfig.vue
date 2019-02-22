@@ -58,6 +58,7 @@ export default {
         addFirstClassMenu() {
             this.handlerVis = true;
             this.$refs.handlerForm.resetFields();
+            this.handlerForm = {};
             this.handlerForm.meta = {};
         },
         /**
