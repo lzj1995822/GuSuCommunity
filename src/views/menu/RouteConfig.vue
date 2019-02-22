@@ -111,9 +111,10 @@ export default {
          */
         append(data) {
             this.handlerVis = true;
-            this.$nextTick(()=> {
-                this.$refs.handlerForm.resetFields();
-            })
+            // this.$nextTick(()=> {
+            //     this.$refs.handlerForm.resetFields();
+            // })
+            this.handlerForm = {};
             this.handlerForm.meta = {};
             this.handlerForm.parentId = data.id;
         },
@@ -141,7 +142,7 @@ export default {
             this.handlerVis = false;
         },
         getLastestMenu() {
-            this.$http('POST', `/identity/roleMenu/menu`).then(data => {
+            this.$http('GET', `/identity/roleMenu/menu`).then(data => {
                 sessionStorage.setItem("menu",JSON.stringify(data));
                 this.$store.commit("getMenu",data);
                 DynamicRoutes.transfer(data);
