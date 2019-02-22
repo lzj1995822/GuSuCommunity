@@ -1,6 +1,6 @@
 <template>
     <el-scrollbar wrapClass="scrollbar-wrapper" viewClass="scrollbar_view">
-        <el-menu background-color="#363C42" text-color="#fff" active-text-color="#409EFF" router  unique-opened  class="el-menu-personal">
+        <el-menu text-color="#fff" active-text-color="#409EFF" background-color="#00000000" router  unique-opened  class="el-menu-personal">
             <div v-for="item in routes" :key="item.name">
                 <!-- 有子菜单 -->
                 <el-submenu :index="item.path" v-if="item.children&&item.children.length">
@@ -52,6 +52,8 @@
         overflow-x: hidden;
     }
     .el-menu-personal {
+        background-image: url("../../../static/img/left.png");
+        background-size: cover;
         height: 100%;
         text-align: left;
     }
