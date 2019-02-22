@@ -62,6 +62,7 @@ export default {
             this.passwordType = this.passwordType === 'password' ? '' : 'password';
         },
         handleLogin () {
+            this.loading = true;
             this.$http('POST', `/identity/principal/login`, this.loginForm).then(data => {
                 sessionStorage.setItem('token', data);
                 sessionStorage.setItem('user', this.loginForm.code);
@@ -71,8 +72,8 @@ export default {
                     this.$store.commit("getMenu",data);
                     DynamicRoutes.transfer(data);
                     this.$router.addRoutes(data);
-                    this.loading = true;
                     this.$router.push('Home');
+                    this.loading = false;
                 });
             });
         }
