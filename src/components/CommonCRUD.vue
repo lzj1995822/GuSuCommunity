@@ -315,7 +315,7 @@
 <style scoped>
     .common-crud {
         width: 95%;
-        margin: 1% 2.5%;
+        margin: 2% 2.5%;
     }
     .btn-right {
         float: right;

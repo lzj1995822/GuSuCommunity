@@ -110,13 +110,13 @@ export default {
 }
 
 .menu-bar {
-    height: 50px;
-    line-height: 50px;
+    height: 40px;
+    line-height: 40px;
     overflow: hidden;
     padding: 0 12px;
     .fl {
         float: left;
-        margin-top: 16px;
+        margin-top: 12px;
         vertical-align: center;
     }
     .fa {
