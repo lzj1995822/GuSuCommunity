@@ -27,7 +27,7 @@
                     </template>
                 </template>
                 <el-form-item :inline="true" label-width="105px">
-                    <el-button type="primary" @click="submit">提交</el-button>
+                    <el-button type="primary" :loading="loading" @click="submit">提交</el-button>
                     <el-button type="danger"  @click="cancel">取消</el-button>
                 </el-form-item>
             </el-form>
@@ -48,6 +48,7 @@ export default {
                 meta: {}
             }, //操作表单
             classInfo: {}, //对应实体类信息
+            loading: false
         }
     },
     created() {
@@ -130,13 +131,17 @@ export default {
          * 提交新增或者更新
          */
         submit() {
+            this.loading = true;
             let type = "POST";
             let path = `/identity/sysRoutes/`;
             if (this.handlerForm.id) {
                 type = "PUT";
                 path += `${this.handlerForm.id}id`;
             }
-            this.$http(type, path, Object.assign({},this.handlerForm)).then(() => this.getLastestMenu());
+            this.$http(type, path, Object.assign({},this.handlerForm)).then(() => {
+                this.getLastestMenu();
+                this.loading = false;
+            });
         },
         cancel() {
             this.handlerVis = false;
