@@ -1,5 +1,6 @@
 <template>
     <div class="app-wrapper">
+        <div class="header-bg"></div>
         <sidebar class="sidebar-container "></sidebar>
         <div class="main-container">
             <nav-bar></nav-bar>
@@ -62,5 +63,12 @@
         min-height: 100%;
         transition: margin-left .28s;
         margin-left: 200px;
+    }
+
+    .header-bg {
+        width: 100% ;
+        height: 60px;
+        background: url("../../static/img/top.png") no-repeat;
+        background-size: 100% 100%;
     }
 </style>
