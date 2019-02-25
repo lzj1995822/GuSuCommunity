@@ -25,6 +25,13 @@
         computed: {
         },
         methods: {
+        },
+        mounted() {
+            let screenWidth = window.screen.width;
+            let height = Math.ceil(screenWidth/1920*60);
+            document.getElementsByClassName("header-bg")[0].style.height = `${height}px`;
+            document.getElementsByClassName("sidebar-container")[0].style.top = `${height}px`;
+            document.getElementsByClassName("sidebar-container")[0].style.height = `${window.screen.height -height}px`;
         }
     }
 </script>
@@ -49,9 +56,7 @@
     .sidebar-container {
         transition: width 0.28s;
         width: 200px !important;
-        height: 100%;
         position: fixed;
-        top: 60px;
         bottom: 0;
         left: 0;
         z-index: 1001;
@@ -60,14 +65,12 @@
 
     // 主体区域
     .main-container {
-        min-height: 100%;
         transition: margin-left .28s;
         margin-left: 200px;
     }
 
     .header-bg {
         width: 100% ;
-        height: 60px;
         background: url("../../static/img/top.png") no-repeat;
         background-size: 100% 100%;
     }

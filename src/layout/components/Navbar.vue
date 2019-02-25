@@ -132,7 +132,7 @@ export default {
         height: 50px;
         margin-right: 20px;
         position: absolute;
-        top: -60px;
+        top: -3px;
         z-index: 999;
         right: 30px;
     }
