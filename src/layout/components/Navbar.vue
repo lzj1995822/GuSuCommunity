@@ -131,6 +131,10 @@ export default {
     .menu-right {
         height: 50px;
         margin-right: 20px;
+        position: absolute;
+        top: -60px;
+        z-index: 999;
+        right: 30px;
     }
     .person-img {
         width: 40px;
@@ -139,10 +143,12 @@ export default {
         margin: 5px 10px;
         border: 1px solid #888888;
         box-shadow: 1px 1px 1px #999;
+        background-color: #fff;
     }
     .person-name {
         cursor: pointer;
         line-height: 18px;
+        color: #fff;
     }
 }
 </style>

@@ -1,6 +1,8 @@
 <template>
     <div id="app">
+        <div class="header-bg"></div>
         <router-view></router-view>
+
     </div>
 </template>
 
@@ -38,5 +40,11 @@ export default {
   }
     .el-select {
         width: 178px !important;
+    }
+    .header-bg {
+        width: 100% ;
+        height: 87px;
+        background: url("../static/img/top.png") no-repeat;
+        background-size: 100% 100%;
     }
 </style>

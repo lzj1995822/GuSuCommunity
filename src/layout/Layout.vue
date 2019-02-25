@@ -50,7 +50,7 @@
         width: 200px !important;
         height: 100%;
         position: fixed;
-        top: 0;
+        top: 60px;
         bottom: 0;
         left: 0;
         z-index: 1001;
