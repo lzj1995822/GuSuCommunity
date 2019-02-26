@@ -3,6 +3,7 @@
         <el-button style="margin-bottom: 10px;" type="primary" size="mini" icon="el-icon-circle-plus-outline" @click="addFirstClassMenu">一级菜单</el-button>
         <el-tree
             class="filter-tree"
+            v-loading="treeLoading"
             :data="menu"
             :props="{children: 'children',label: labelHandler}"
             :highlight-current="true"
@@ -48,7 +49,8 @@ export default {
                 meta: {}
             }, //操作表单
             classInfo: {}, //对应实体类信息
-            loading: false
+            loading: false,
+            treeLoading: false
         }
     },
     created() {
@@ -166,8 +168,10 @@ export default {
                 }).catch(action => this.$message({type: 'success', message: '取消成功'}));
         },
         loadAllMenu() {
+            this.treeLoading = true;
             this.$http('POST', `/identity/sysRoutes/list`, false).then(data => {
                 this.menu = data;
+                this.treeLoading = false;
             });
         },
     }

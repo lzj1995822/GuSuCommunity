@@ -2,7 +2,7 @@
     <section class="app-main" style="min-height: 100%">
         <transition name="fade">
             <keep-alive :include="cachedViews">
-                <router-view :key="key"></router-view>
+                <router-view></router-view>
             </keep-alive>
         </transition>
     </section>
@@ -21,3 +21,8 @@ export default {
     }
 }
 </script>
+<style>
+    * {
+        overflow: hidden;
+    }
+</style>
