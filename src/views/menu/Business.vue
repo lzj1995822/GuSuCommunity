@@ -1,8 +1,7 @@
 <template>
     <section>
-        <CommonCRUD :columns="$store.state.classInfo.properties" apiRoot="/identity/teenagers"
+        <CommonCRUD :columns="$store.state.classInfo.properties" apiRoot="/identity/business"
                     :formColumns="formColumns">
-
         </CommonCRUD>
     </section>
 </template>
@@ -10,7 +9,7 @@
 <script>
     import CommonCRUD from '@/components/CommonCRUD';
     export default {
-        name: "Teenagers",
+        name: "Business",
         data(){
             return {
                 formColumns: []
