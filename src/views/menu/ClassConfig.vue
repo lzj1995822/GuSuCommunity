@@ -86,6 +86,11 @@ export default {
                     type: 'string',
                     des: "类型验证",
                 },
+                {
+                    name: "notShow",
+                    type: 'string',
+                    des: "是否不显示",
+                }
             ],
             sortColumns: [
                 {

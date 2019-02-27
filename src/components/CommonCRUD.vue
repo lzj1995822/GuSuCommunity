@@ -1,8 +1,9 @@
 <template>
     <div class="common-crud">
         <div class="common-query">
+            <slot name="query"></slot>
             <el-form :inline="true" :model="queryForm" ref="form" class="demo-form-inline" label-width="75px">
-                <el-form-item v-for="item in queryFormColumns" :key="item.des" :label="item.des">
+                <el-form-item v-for="item in queryFormColumns" :key="item.des" :label="item.type === 'checkbox' ? '' : item.des">
                     <el-input v-model="queryForm[item.name]" v-if="item.type === 'string'"></el-input>
                     <el-select v-model="queryForm[item.name]" v-else-if="item.type === 'select'">
                         <el-option v-for="opItem in item.options" :value="opItem.value" :label="opItem.label" :key="opItem.value"></el-option>
@@ -25,6 +26,10 @@
                                     placeholder="选择日期"
                                     style="width: 178px">
                     </el-date-picker>
+                    <el-checkbox v-if="item.type === 'checkbox'"
+                                 v-model="queryForm[item.name]"
+                    :label="item.des" border size="mini">
+                    </el-checkbox>
                 </el-form-item>
                 <el-button v-if="queryFormColumns.length > 0" @click="query" type="primary" size="mini" icon="el-icon-search">搜索</el-button>
             </el-form>
@@ -46,7 +51,7 @@
                 width="55"
                 align="center">
             </el-table-column>
-            <el-table-column v-for="item in columns" :key="item.name" :prop="item.name" :label="item.des"
+            <el-table-column v-for="item in columns" v-if="!item.notShow" :key="item.name" :prop="item.name" :label="item.des"
                              :width="item.width || ''" :formatter="item.formatter" align="center"></el-table-column>
         </el-table>
         <el-pagination style="text-align: right;margin-top: 20px;"
@@ -61,7 +66,7 @@
         :modal-append-to-body='false'
         :before-close="handleClose">
         <el-form :inline="true" :model="form" :rules="rules" ref="form" class="demo-form-inline" label-width="100px">
-            <el-form-item v-for="item in formColumns" :key="item.des" :label="item.des" :prop="item.name" >
+            <el-form-item v-for="item in formColumns"  :key="item.des" :label="item.des" :prop="item.name" >
                 <el-input v-model="form[item.name]" v-if="item.type === 'string'" :disabled="item.disabled"></el-input>
                 <el-select v-model="form[item.name]" v-else-if="item.type === 'select'" filterable :disabled="item.disabled">
                     <el-option v-for="opItem in item.options" :value="opItem.value" :label="opItem.label" :key="opItem.value"></el-option>
@@ -293,8 +298,12 @@
                         if (item.min && !item.max){
                             this.rules[item.name].push({min:Number(item.min), message: `输入最少${item.min}位`, trigger: item.triggerCheck});
                         }
-                        if (item.min && item.max){
+                        if (item.max && item.min){
+                            if(item.max == item.min){
+                                this.rules[item.name].push({min:Number(item.min), message: `请输入${item.min}位`, trigger: item.triggerCheck});
+                            }else{
                             this.rules[item.name].push({min:Number(item.min),max:Number(item.max), message: `请输入${item.min}位到${item.max}位`, trigger: item.triggerCheck});
+                        }
                         }
                         if (item.max && !item.min){
                             this.rules[item.name].push({max:Number(item.max), message: `输入最多${item.max}位`, trigger: item.triggerCheck});
@@ -337,5 +346,8 @@
     }
     .common-crud i {
         font-size: 12px;
+    }
+    .el-checkbox.is-bordered.el-checkbox--mini {
+        padding : 5px 15px 5px 10px !important
     }
 </style>
