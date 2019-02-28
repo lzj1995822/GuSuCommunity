@@ -3,7 +3,7 @@
         <div class="common-query">
             <slot name="query"></slot>
             <el-form :inline="true" :model="queryForm" ref="form" class="demo-form-inline" label-width="75px">
-                <el-form-item v-for="item in queryFormColumns" :key="item.des" :label="item.type === 'checkbox' ? '' : item.des">
+                <el-form-item v-for="item in queryFormColumns" v-if="item.visible" :key="item.des" :label="item.type === 'checkbox' ? '' : item.des">
                     <el-input v-model="queryForm[item.name]" v-if="item.type === 'string'"></el-input>
                     <el-select v-model="queryForm[item.name]" v-else-if="item.type === 'select'">
                         <el-option v-for="opItem in item.options" :value="opItem.value" :label="opItem.label" :key="opItem.value"></el-option>
@@ -31,7 +31,7 @@
                     :label="item.des" border size="mini">
                     </el-checkbox>
                 </el-form-item>
-                <el-button v-if="queryFormColumns.length > 0" @click="query" type="primary" size="mini" icon="el-icon-search">搜索</el-button>
+                <el-button v-if="queryFormColumns.filter(item => item.visible === true).length > 0" @click="query" type="primary" size="mini" icon="el-icon-search">搜索</el-button>
             </el-form>
         </div>
         <div class="handler-btn">
