@@ -17,6 +17,21 @@
                         des: '党员家庭',
                         name: 'partyFamily',
                         type: 'checkbox'
+                    },
+                    {
+                        des: '退伍军人家庭',
+                        name: 'veteranFamily',
+                        type: 'checkbox'
+                    },
+                    {
+                        des: '困难家庭',
+                        name: 'hardFamily',
+                        type: 'checkbox'
+                    },
+                    {
+                        des: '残疾家庭',
+                        name: 'disabledFamily',
+                        type: 'checkbox'
                     }
                     ]
 
