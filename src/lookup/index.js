@@ -12,5 +12,11 @@ export default {
             value: 'PEOPLE',
             label: '群众'
         }
+    ],
+    'IdType': [
+        {
+            value: 'IDENTITY_CARD',
+            label: '身份证'
+        }
     ]
 }
