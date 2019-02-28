@@ -348,6 +348,7 @@
         font-size: 12px;
     }
     .el-checkbox.is-bordered.el-checkbox--mini {
-        padding : 5px 15px 5px 10px !important
+        padding : 5px 15px 5px 10px !important;
+        margin-left: 10px;
     }
 </style>
