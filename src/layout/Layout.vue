@@ -1,7 +1,7 @@
 <template>
     <div class="app-wrapper">
         <div class="header-bg"></div>
-        <sidebar class="sidebar-container "></sidebar>
+        <sidebar class="sidebar-container"></sidebar>
         <div class="main-container">
             <nav-bar></nav-bar>
             <!--<tags-view></tags-view>-->
@@ -55,18 +55,21 @@
 
     .sidebar-container {
         transition: width 0.28s;
-        width: 200px !important;
-        position: fixed;
+        width: 100%;
         bottom: 0;
         left: 0;
+        height: 50px !important;
         z-index: 1001;
         overflow: hidden;
     }
 
     // 主体区域
     .main-container {
+        /*width: 90%;*/
+        /*height: 80%;*/
+        /*margin: 35px auto;*/
         transition: margin-left .28s;
-        margin-left: 200px;
+        box-shadow: gray 1px 1px 2px;
     }
 
     .header-bg {
