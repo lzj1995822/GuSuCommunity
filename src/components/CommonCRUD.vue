@@ -85,7 +85,7 @@
                 </el-date-picker>
                 <!--预留富文本编辑-->
                 <el-upload
-                    v-else-if="item.type === 'img'"
+                    v-else-if="item.type === 'file'"
                     class="avatar-uploader"
                     action="https://jsonplaceholder.typicode.com/posts/"
                     :show-file-list="false"
@@ -338,7 +338,11 @@
 <style scoped>
     .common-crud {
         width: 95%;
-        margin: 2% 2.5%;
+        margin: 1% 2.5%;
+        padding: 2%;
+        background-color: rgba(255, 255, 255, .9);
+        border-radius: 2px;
+        box-shadow: #e0e0e0 1px 1px 3px;
     }
     .btn-right {
         float: right;
