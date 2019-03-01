@@ -2,11 +2,15 @@ export default {
     'PoliticalStatus': [
         {
             value: 'PARTY_MEMBER',
-            label: '党员'
+            label: '中共党员'
         },
         {
-            value: 'TUAN_MEMBER',
-            label: '团员'
+            value: 'PROTATIONARY_TUAN_MEMBER',
+            label: '中共预备党员'
+        },
+        {
+            value: 'LEAGUEMEMBERS',
+            label: '共青团员'
         },
         {
             value: 'PEOPLE',
@@ -44,5 +48,15 @@ export default {
                 value: 'Master',
                 label: '硕士及以上'
             }
-]
+            ],
+        'TrueFalse' :[
+            {
+                value: 'true',
+                label: '本科'
+            },
+            {
+                value: 'Undergraduate',
+                label: '本科'
+            }
+    ]
 }
