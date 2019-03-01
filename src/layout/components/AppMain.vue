@@ -1,5 +1,5 @@
 <template>
-    <section class="app-main" style="min-height: 100%">
+    <section class="app-main" style="min-height: 100%;">
         <transition name="fade">
             <keep-alive :include="cachedViews">
                 <router-view></router-view>
@@ -22,4 +22,7 @@ export default {
 }
 </script>
 <style>
+    .app-main {
+        padding-bottom: 30px;
+    }
 </style>

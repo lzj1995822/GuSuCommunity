@@ -326,11 +326,18 @@
                 });
             }
         },
-        created () {
+        created() {
             let path = `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;
             this.defaultRequestConfig(path);
             this.loadTableData(path);
             this.validationRules();
+        },
+        mounted() {
+            setTimeout( () => {
+                let headerHeight = this.$screen() * 156;
+                let menuHeight = this.$screen() * 53;
+                document.getElementsByClassName('common-crud')[0].style.minHeight = `${Math.ceil(document.body.clientHeight - headerHeight - menuHeight - 45)}px`;
+            }, 200)
         }
     };
 </script>
