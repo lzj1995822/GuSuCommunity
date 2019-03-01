@@ -2,21 +2,24 @@ export default {
     'PoliticalStatus': [
         {
             value: 'PARTY_MEMBER',
-            label: '中共党员'
+            label: '党员'
         },
         {
-            value: 'PROTATIONARY_TUAN_MEMBER',
-            label: '中共预备党员'
-        },
-        {
-            value: 'LEAGUEMEMBERS',
-            label: '共青团员'
+            value: 'TUAN_MEMBER',
+            label: '团员'
         },
         {
             value: 'PEOPLE',
             label: '群众'
         }
     ],
+    'IdType': [
+        {
+            value: 'IDENTITY_CARD',
+            label: '身份证'
+        }
+    ],
+
         'Education': [
             {
                 value: 'PrimarySchool',

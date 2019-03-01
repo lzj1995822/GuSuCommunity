@@ -64,9 +64,14 @@ export default {
         handleLogin () {
             this.loading = true;
             this.$http('POST', `/identity/principal/login`, this.loginForm).then(data => {
-                sessionStorage.setItem('token', data);
+                let token = data.split("$")[0];
+                sessionStorage.setItem('token', token);
                 sessionStorage.setItem('user', this.loginForm.code);
-            }).then(() => {
+                return data.split("$")[1];
+            }).then((userId) => {
+                this.$http('GET',`/identity/principal/${userId}id`,false).then(data => {
+                    sessionStorage.setItem('userInfo',JSON.stringify(data));
+                });
                 this.$http('GET', `/identity/roleMenu/menu`, false).then(data => {
                     sessionStorage.setItem("menu",JSON.stringify(data));
                     this.$store.commit("getMenu",data);

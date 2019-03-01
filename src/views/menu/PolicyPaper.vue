@@ -1,7 +1,7 @@
 <template>
     <section>
         <CommonCRUD :columns="$store.state.classInfo.properties" apiRoot="/identity/policyPaper"
-                    :formColumns="formColumns">
+                    :formColumns="formColumns" :queryFormColumns="queryColumns">
         </CommonCRUD>
     </section>
 </template>
@@ -12,15 +12,27 @@
         name: "PolicyPaper",
         data(){
             return {
-                formColumns: []
+                formColumns: [],
+                queryColumns: [
+                    {
+                        name: 'organizationId',
+                        type: 'string',
+                        value: '',
+                        visible: false
+                    }
+                ],
             }
         },
+        methods: {
 
+        },
         components: {
             CommonCRUD
         },
         created() {
             this.formColumns = this.$store.state.classInfo.properties;
+            console.log(JSON.parse(sessionStorage.getItem('userInfo')),"ss")
+            this.queryColumns[0].value = JSON.parse(sessionStorage.getItem('userInfo')).organizationId;
         }
     }
 </script>

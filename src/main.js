@@ -34,6 +34,12 @@ Vue.prototype.$validate = (selected) => {
     }
     return true;
 };
+
+Vue.prototype.$screen = () => {
+    let screenWidth = window.screen.width;
+    return screenWidth/1920;
+};
+
 getRouter(router);
 
 DynamicRoutes.flushHandler(router, store);

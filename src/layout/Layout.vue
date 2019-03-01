@@ -27,11 +27,11 @@
         methods: {
         },
         mounted() {
-            let screenWidth = window.screen.width;
-            let height = Math.ceil(screenWidth/1920*60);
-            document.getElementsByClassName("header-bg")[0].style.height = `${height}px`;
-            document.getElementsByClassName("sidebar-container")[0].style.top = `${height}px`;
-            document.getElementsByClassName("sidebar-container")[0].style.height = `${window.screen.height -height}px`;
+            let headerHeight = this.$screen() * 156;
+            let menuHeight = this.$screen() * 53;
+            document.getElementsByClassName("header-bg")[0].style.height = `${Math.ceil(headerHeight)}px`;
+            document.getElementsByClassName('sidebar-container')[0].style.height = `${Math.ceil(menuHeight)}px`;
+            document.getElementsByClassName('main-container')[0].style.height = `${Math.ceil(window.screen.height - headerHeight - menuHeight)}px`;
         }
     }
 </script>
@@ -58,7 +58,6 @@
         width: 100%;
         bottom: 0;
         left: 0;
-        height: 50px !important;
         z-index: 1001;
         overflow: hidden;
     }
@@ -70,6 +69,7 @@
         /*margin: 35px auto;*/
         transition: margin-left .28s;
         box-shadow: gray 1px 1px 2px;
+        background: url("../../static/img/bg.png") no-repeat;
     }
 
     .header-bg {
