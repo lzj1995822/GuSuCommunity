@@ -19,6 +19,13 @@
                         type: 'string',
                         value: '',
                         visible: false
+                    },
+                    {
+                        des: '标题',
+                        name: 'title',
+                        type: 'string',
+                        value: '',
+                        visible: true
                     }
                 ],
             }
@@ -31,7 +38,6 @@
         },
         created() {
             this.formColumns = this.$store.state.classInfo.properties;
-            console.log(JSON.parse(sessionStorage.getItem('userInfo')),"ss")
             this.queryColumns[0].value = JSON.parse(sessionStorage.getItem('userInfo')).organizationId;
         }
     }

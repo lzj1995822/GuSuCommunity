@@ -1,7 +1,7 @@
 <template>
     <section>
         <CommonCRUD :columns="$store.state.classInfo.properties" apiRoot="/identity/supervisoryCommittee"
-                    :formColumns="formColumns">
+                    :formColumns="formColumns" :queryFormColumns="queryColumns">
 
         </CommonCRUD>
     </section>
@@ -15,13 +15,27 @@
         name: "SupervisoryCommittee",
         data(){
             return {
-                formColumns: []
+                formColumns: [],
+                queryColumns: [
+                    {
+                        des: '姓名',
+                        name: 'name',
+                        type: 'string',
+                        value: '',
+                        visible: true,
+                    }
+                ]
             }
         },
         methods: {
             handleSelectOptions() {
-                let item = this.formColumns.filter(item => item.name === 'idType')[0];
-                item.options = LookUp['IdType'];
+                let  items = [
+                    ['sex', 'Sex'],
+                    ['idType', 'IdType']
+                ].forEach(item => {
+                        this.formColumns.filter(sub => sub.name === item[0])[0].options = LookUp[item[1]]
+                    }
+                );
             }
         },
         components: {
