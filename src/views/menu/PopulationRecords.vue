@@ -1,17 +1,25 @@
 <template>
     <section>
-        <CommonCRUD :columns="formColumns" api-root="identity/populationRecords" :formColumns="formColumns"></CommonCRUD>
+        <CommonCRUD :columns="formColumns" api-root="identity/populationRecords" :formColumns="formColumns" :queryFormColumns="queryColumns"></CommonCRUD>
     </section>
 </template>
 
 <script>
     import LookUp from '@/lookup';
+    import { tansfer } from "../../lookup/transfer";
     import CommonCRUD from '@/components/CommonCRUD';
     export default {
         name: 'PopulationRecords',
         data() {
             return {
-
+                queryColumns:[
+                    {
+                        des: '姓名',
+                        name: 'name',
+                        type: 'string',
+                        visible :true
+                    }
+                    ]
             }
         },
         created(){
@@ -29,13 +37,7 @@
                         this.formColumns.filter(sub => sub.name === item[0])[0].options = LookUp[item[1]]
                     }
                 )
-                 this.formColumns.forEach(item => {
-                     if(item.transferType === 'lookup') {
-                         item.formatter = (row, cell,val,index) => {
-                             return LookUp[item.lookupKey].filter(subitem => subitem.value === val)[0].label;
-                         }
-                     }
-                 });
+                tansfer(this.formColumns);
             }
         },
         components: {

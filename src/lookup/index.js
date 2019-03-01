@@ -31,7 +31,8 @@ export default {
             },
             {
                 value: 'MiddleSchool',
-                label: '初中'},
+                label: '初中'
+            },
             {
                 value: 'HighSchool',
                 label: '高中'
@@ -59,9 +60,9 @@ export default {
                 label: '否'
             }
     ],
-    'Sex' :[
+    'Sex': [
         {
-            value :'man',
+            value :'male',
             label :'男'
         },
         {

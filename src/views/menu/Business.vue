@@ -1,7 +1,7 @@
 <template>
     <section>
         <CommonCRUD :columns="$store.state.classInfo.properties" apiRoot="/identity/business"
-                    :formColumns="formColumns">
+                    :formColumns="formColumns" :queryFormColumns="queryColumns">
         </CommonCRUD>
     </section>
 </template>
@@ -12,7 +12,16 @@
         name: "Business",
         data(){
             return {
-                formColumns: []
+                formColumns: [],
+                queryColumns: [
+                    {
+                        des: '企业名称',
+                        name: 'name',
+                        type: 'string',
+                        value: '',
+                        visible: true,
+                    }
+                ]
             }
         },
 

@@ -28,7 +28,7 @@
                     </el-date-picker>
                     <el-checkbox v-if="item.type === 'checkbox'"
                                  v-model="queryForm[item.name]"
-                    :label="item.des" border size="mini">
+                    :label="item.des" border size="mini" true-label="true" false-label="false">
                     </el-checkbox>
                 </el-form-item>
                 <el-button v-if="queryFormColumns.filter(item => item.visible === true).length > 0" @click="query" type="primary" size="mini" icon="el-icon-search">搜索</el-button>

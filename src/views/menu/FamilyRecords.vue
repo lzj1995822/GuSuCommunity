@@ -8,6 +8,7 @@
 
 <script>
     import LookUp from '@/lookup';
+    import { tansfer } from "../../lookup/transfer";
     import CommonCRUD from '@/components/CommonCRUD';
     export default {
         name: 'FamilyRecords',
@@ -17,22 +18,26 @@
                     {
                         des: '党员家庭',
                         name: 'partyFamily',
-                        type: 'checkbox'
+                        type: 'checkbox',
+                        visible:true
                     },
                     {
                         des: '退伍军人家庭',
                         name: 'veteranFamily',
-                        type: 'checkbox'
+                        type: 'checkbox',
+                        visible:true
                     },
                     {
                         des: '困难家庭',
                         name: 'hardFamily',
-                        type: 'checkbox'
+                        type: 'checkbox',
+                        visible :true
                     },
                     {
                         des: '残疾家庭',
                         name: 'disabledFamily',
-                        type: 'checkbox'
+                        type: 'checkbox',
+                        visible:true
                     }
                     ]
 
@@ -55,13 +60,7 @@
                         this.formColumns.filter(sub => sub.name === item[0])[0].options = LookUp[item[1]]
                     }
                 )
-                this.formColumns.forEach(item => {
-                    if(item.transferType === 'lookup') {
-                        item.formatter = (row, cell,val,index) => {
-                            return LookUp[item.lookupKey].filter(subitem => subitem.value === val)[0].label;
-                        }
-                    }
-                });
+                tansfer(this.formColumns);
             }
         },
         components: {
