@@ -52,11 +52,21 @@ export default {
         'TrueFalse' :[
             {
                 value: 'true',
-                label: '本科'
+                label: '是'
             },
             {
-                value: 'Undergraduate',
-                label: '本科'
+                value: 'false',
+                label: '否'
             }
+    ],
+    'Sex' :[
+        {
+            value :'man',
+            label :'男'
+        },
+        {
+            value :'female',
+            label :'女'
+        }
     ]
 }

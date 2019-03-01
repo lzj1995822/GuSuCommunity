@@ -20,12 +20,16 @@
         },
         methods: {
             handleSelectOptions() {
-                let item = this.formColumns.filter(item => item.name === 'politicalStatus')[0];
-                item.options = LookUp.PoliticalStatus;
-                let item1 = this.formColumns.filter(item => item.name === 'education')[0];
-                item1.options = LookUp.PoliticalStatus;
+                let  items = [
+                    ['politicalStatus', 'PoliticalStatus'],
+                    ['education', 'Education'],
+                    ['married', 'TrueFalse'],
+                    ['sex', 'Sex']
+                ].forEach(item => {
+                        this.formColumns.filter(sub => sub.name === item[0])[0].options = LookUp[item[1]]
+                    }
+                )
                  this.formColumns.forEach(item => {
-                     console.log(item.transferType);
                      if(item.transferType === 'lookup') {
                          item.formatter = (row, cell,val,index) => {
                              return LookUp[item.lookupKey].filter(subitem => subitem.value === val)[0].label;
