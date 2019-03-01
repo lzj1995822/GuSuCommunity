@@ -324,6 +324,9 @@
                         }
                     }
                 });
+            },
+            transfer(a,b,c,d,f){
+                console.log(a,b,c,d,f)
             }
         },
         created() {
