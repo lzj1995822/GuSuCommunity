@@ -83,16 +83,7 @@
                                 style="width: 178px">
                 </el-date-picker>
                 <!--预留富文本编辑-->
-                <el-upload
-                    v-else-if="item.type === 'file'"
-                    class="avatar-uploader"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :show-file-list="false"
-                    :disable="item.disabled || disabled"
-                    :on-success="handleAvatarSuccess">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
+                <CommonUpload v-if="item.type === 'file'" :value="form[item.name]" @getValue="form[item.name] = $event"></CommonUpload>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -105,6 +96,7 @@
 
 <script>
     import reqType from '@/api/reqType';
+    import CommonUpload from '@/components/UpLoad'
     export default {
         name: 'CommonCRUD',
         props: {
@@ -171,6 +163,9 @@
             path() {
                 return `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;
             }
+        },
+        components: {
+            CommonUpload
         },
         methods: {
             rowClick(row) {
@@ -323,10 +318,7 @@
                         }
                     }
                 });
-            },
-            transfer(a,b,c,d,f){
-                console.log(a,b,c,d,f)
-            },
+            }
         },
         created() {
             let path = `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;

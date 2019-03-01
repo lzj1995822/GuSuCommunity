@@ -12,7 +12,7 @@
             :visible.sync="dialogVisible"
             width="70%"
             align="left"
-            :modal-append-to-body='false'
+            :append-to-body="true"
             :before-close="handleClose">
             <div>
                 <CommonCRUD :columns="propertyColumns" :queryFormColumns="queryColumns" apiRoot="/identity/sysClassProperty"

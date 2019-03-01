@@ -77,7 +77,7 @@ export default {
                     this.$store.commit("getMenu",data);
                     DynamicRoutes.transfer(data);
                     this.$router.addRoutes(data);
-                    this.$router.push('Home');
+                    this.$router.push({path: '/index/homeMap'});
                     this.loading = false;
                 });
             });
