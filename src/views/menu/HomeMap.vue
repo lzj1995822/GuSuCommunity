@@ -33,6 +33,15 @@
         },
         mounted() {
             this.initMap();
+            let headerHeight = this.$screen() * 156;
+            let menuHeight = this.$screen() * 53;
+            document.getElementById('allmap').style.height = `${Math.ceil(document.body.clientHeight - headerHeight - menuHeight - 45)}px`;
+            setTimeout( () => {
+                document.getElementsByClassName('app-main')[0].style.paddingBottom = '0px';
+            }, 200)
+        },
+        beforeDestroy() {
+            document.getElementsByClassName('app-main')[0].style.paddingBottom = '30px';
         }
 
     }
@@ -41,7 +50,6 @@
 <style>
     #allmap {
         width: 100%;
-        height: calc(100vh*0.85);
+        height: 100%;
     }
-
 </style>

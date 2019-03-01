@@ -31,7 +31,7 @@
             let menuHeight = this.$screen() * 53;
             document.getElementsByClassName("header-bg")[0].style.height = `${Math.ceil(headerHeight)}px`;
             document.getElementsByClassName('sidebar-container')[0].style.height = `${Math.ceil(menuHeight)}px`;
-            document.getElementsByClassName('main-container')[0].style.height = `${Math.ceil(window.screen.height - headerHeight - menuHeight)}px`;
+            // document.getElementsByClassName('main-container')[0].style.height = `${Math.ceil(document.body.clientHeight - headerHeight - menuHeight)}px`;
         }
     }
 </script>
@@ -70,11 +70,15 @@
         transition: margin-left .28s;
         box-shadow: gray 1px 1px 2px;
         background: url("../../static/img/bg.png") no-repeat;
+        /*overflow: hidden;*/
     }
 
     .header-bg {
         width: 100% ;
         background: url("../../static/img/top.png") no-repeat;
         background-size: 100% 100%;
+    }
+    html, body {
+        /*overflow: hidden;*/
     }
 </style>

@@ -73,8 +73,7 @@
                     <el-option v-for="opItem in item.options" :value="opItem.value" :label="opItem.label" :key="opItem.value"></el-option>
                 </el-select>
                 <el-radio-group v-if="item.type === 'radio'" v-model="form[item.name]" :disabled="item.disabled || disabled" style="width: 178px" >
-                    <el-radio :label="true">是</el-radio>
-                    <el-radio :label="false">否</el-radio>
+                    <el-radio v-for="opItem in item.options" :label="opItem.value" :key="opItem.value"> {{opItem.label}}</el-radio>
                 </el-radio-group>
                 <el-date-picker v-if="item.type === 'date'"
                                 v-model="form[item.name]"
@@ -327,13 +326,20 @@
             },
             transfer(a,b,c,d,f){
                 console.log(a,b,c,d,f)
-            }
+            },
         },
-        created () {
+        created() {
             let path = `${this.apiRoot}/page?page=${this.pageable.currentPage - 1}&size=${this.pageable.pageSize}`;
             this.defaultRequestConfig(path);
             this.loadTableData(path);
             this.validationRules();
+        },
+        mounted() {
+            setTimeout( () => {
+                let headerHeight = this.$screen() * 156;
+                let menuHeight = this.$screen() * 53;
+                document.getElementsByClassName('common-crud')[0].style.minHeight = `${Math.ceil(document.body.clientHeight - headerHeight - menuHeight - 45)}px`;
+            }, 200)
         }
     };
 </script>
