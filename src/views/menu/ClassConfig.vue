@@ -90,6 +90,16 @@ export default {
                     name: "notShow",
                     type: 'string',
                     des: "是否不显示",
+                },
+                {
+                    name: "transferType",
+                    type: 'string',
+                    des: "转换类型",
+                },
+                {
+                    name: "lookupKey",
+                    type: 'string',
+                    des: "转换Key",
                 }
             ],
             sortColumns: [

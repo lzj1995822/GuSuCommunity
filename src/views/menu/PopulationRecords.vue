@@ -22,6 +22,16 @@
             handleSelectOptions() {
                 let item = this.formColumns.filter(item => item.name === 'politicalStatus')[0];
                 item.options = LookUp.PoliticalStatus;
+                let item1 = this.formColumns.filter(item => item.name === 'education')[0];
+                item1.options = LookUp.PoliticalStatus;
+                 this.formColumns.forEach(item => {
+                     console.log(item.transferType);
+                     if(item.transferType === 'lookup') {
+                         item.formatter = (row, cell,val,index) => {
+                             return LookUp[item.lookupKey].filter(subitem => subitem.value === val)[0].label;
+                         }
+                     }
+                 });
             }
         },
         components: {
