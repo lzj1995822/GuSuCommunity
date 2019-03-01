@@ -8,6 +8,7 @@
 </template>
 
 <script>
+    import { tansfer } from "../../lookup/transfer";
     import LookUp from '@/lookup';
     import CommonCRUD from '@/components/CommonCRUD';
     export default {
@@ -20,7 +21,7 @@
         methods: {
             handleSelectOptions() {
                 let item = this.formColumns.filter(item => item.name === 'politicalStatus')[0];
-                item.options = LookUp.PoliticalStatus;
+                item.options = LookUp['PoliticalStatus'];
             }
         },
         components: {
@@ -29,6 +30,7 @@
         created() {
             this.formColumns = this.$store.state.classInfo.properties;
             this.handleSelectOptions();
+            tansfer(this.formColumns)
         }
     }
 </script>

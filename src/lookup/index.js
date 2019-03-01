@@ -24,39 +24,39 @@ export default {
         }
     ],
 
-        'Education': [
-            {
-                value: 'PrimarySchool',
-                label: '小学'
-            },
-            {
-                value: 'MiddleSchool',
-                label: '初中'},
-            {
-                value: 'HighSchool',
-                label: '高中'
-            },
-            {
-                value: 'JuniorCollege',
-                label: '大专'
-            },
-            {
-                value: 'Undergraduate',
-                label: '本科'
-            },
-            {
-                value: 'Master',
-                label: '硕士及以上'
-            }
-            ],
-        'TrueFalse' :[
-            {
-                value: 'true',
-                label: '本科'
-            },
-            {
-                value: 'Undergraduate',
-                label: '本科'
-            }
+    'Education': [
+        {
+            value: 'PrimarySchool',
+            label: '小学'
+        },
+        {
+            value: 'MiddleSchool',
+            label: '初中'},
+        {
+            value: 'HighSchool',
+            label: '高中'
+        },
+        {
+            value: 'JuniorCollege',
+            label: '大专'
+        },
+        {
+            value: 'Undergraduate',
+            label: '本科'
+        },
+        {
+            value: 'Master',
+            label: '硕士及以上'
+        }
+        ],
+    'TrueFalse' :[
+        {
+            value: 'true',
+            label: '本科'
+        },
+        {
+            value: 'Undergraduate',
+            label: '本科'
+        }
     ]
 }
