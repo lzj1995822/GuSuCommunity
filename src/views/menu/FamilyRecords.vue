@@ -7,6 +7,7 @@
 </template>
 
 <script>
+    import LookUp from '@/lookup';
     import CommonCRUD from '@/components/CommonCRUD';
     export default {
         name: 'FamilyRecords',
@@ -39,7 +40,29 @@
         },
         created(){
             this.formColumns = this.$store.state.classInfo.properties
-
+            this.handleSelectOptions();
+        },
+        methods: {
+            handleSelectOptions() {
+                let  items = [
+                    ['basicIncome', 'TrueFalse'],
+                    ['masterSex', 'Sex'],
+                    ['partyFamily', 'TrueFalse'],
+                    ['veteranFamily', 'TrueFalse'],
+                    ['disabledFamily', 'TrueFalse'],
+                    ['hardFamily', 'TrueFalse']
+                ].forEach(item => {
+                        this.formColumns.filter(sub => sub.name === item[0])[0].options = LookUp[item[1]]
+                    }
+                )
+                this.formColumns.forEach(item => {
+                    if(item.transferType === 'lookup') {
+                        item.formatter = (row, cell,val,index) => {
+                            return LookUp[item.lookupKey].filter(subitem => subitem.value === val)[0].label;
+                        }
+                    }
+                });
+            }
         },
         components: {
             CommonCRUD
