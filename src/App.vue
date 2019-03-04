@@ -48,5 +48,8 @@ export default {
     .el-date-editor.el-input, .el-date-editor.el-input__inner{
         width:200px !important;
     }
+  .el-textarea__inner{
+      width:200px !important;
+  }
 
 </style>
