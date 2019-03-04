@@ -37,7 +37,16 @@ export default {
       line-height: 46px;
   }
     .el-select {
-        width: 178px !important;
+        width: 200px !important;
+    }
+  .el-radio-group {
+        width:200px !important;;
+  }
+  .el-input--mini .el-input__inner {
+        width:200px !important;
+  }
+    .el-date-editor.el-input, .el-date-editor.el-input__inner{
+        width:200px !important;
     }
 
 </style>

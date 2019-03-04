@@ -8,7 +8,7 @@
                     <el-select v-model="queryForm[item.name]" v-else-if="item.type === 'select'">
                         <el-option v-for="opItem in item.options" :value="opItem.value" :label="opItem.label" :key="opItem.value"></el-option>
                     </el-select>
-                    <el-radio-group v-if="item.type === 'radio'" v-model="queryForm[item.name]" style="width: 178px" >
+                    <el-radio-group v-if="item.type === 'radio'" v-model="queryForm[item.name]" >
                         <el-radio :label="1">是</el-radio>
                         <el-radio :label="0">否</el-radio>
                     </el-radio-group>
@@ -17,14 +17,14 @@
                                     type="date"
                                     placeholder="选择日期"
                                     value-format="yyyy-MM-dd"
-                                    style="width: 178px">
+                                    >
                     </el-date-picker>
                     <el-date-picker v-if="item.type === 'datetime'"
                                     v-model="queryForm[item.name]"
                                     type="datetime"
                                     value-format="yyyy-MM-ddTHH:mm:ss"
                                     placeholder="选择日期"
-                                    style="width: 178px">
+                                    >
                     </el-date-picker>
                     <el-checkbox v-if="item.type === 'checkbox'"
                                  v-model="queryForm[item.name]"
@@ -60,6 +60,7 @@
                        @current-change="currentChange" @size-change="sizeChange" layout="total, sizes, prev, pager, next">
         </el-pagination>
         <el-dialog
+        v-if="dialogVisible"
         :title="title"
         :visible.sync="dialogVisible"
         width="50%"
@@ -80,7 +81,7 @@
                                 type="date"
                                 :disabled="item.disabled || disabled"
                                 placeholder="选择日期"
-                                style="width: 178px">
+                                >
                 </el-date-picker>
                 <!--预留富文本编辑-->
                 <CommonUpload v-if="item.type === 'file'" :value="form[item.name]" @getValue="form[item.name] = $event"></CommonUpload>
