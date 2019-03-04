@@ -100,6 +100,11 @@ export default {
                     name: "lookupKey",
                     type: 'string',
                     des: "转换Key",
+                },
+                {
+                    name: "formShow",
+                    type: 'string',
+                    des: "表单是否显示",
                 }
             ],
             sortColumns: [
