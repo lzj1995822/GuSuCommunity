@@ -145,4 +145,7 @@
         border: #b7b7b7 1px dashed;
         border-radius: 5px;
     }
+    .file-upload{
+        width:400px;
+    }
 </style>
