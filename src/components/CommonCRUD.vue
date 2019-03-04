@@ -60,7 +60,7 @@
                        @current-change="currentChange" @size-change="sizeChange" layout="total, sizes, prev, pager, next">
         </el-pagination>
         <el-dialog
-         v-if="dialogVisible"
+        v-if="dialogVisible"
         :title="title"
         :visible.sync="dialogVisible"
         width="50%"
