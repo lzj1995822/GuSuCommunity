@@ -31,13 +31,14 @@
             }
         },
         methods: {
-
+            
         },
         components: {
             CommonCRUD
         },
         created() {
             this.formColumns = this.$store.state.classInfo.properties;
+            this.formColumns.filter(item => item.des == '所属部门')[0].value=JSON.parse(sessionStorage.getItem('userInfo')).organizationId;
             this.queryColumns[0].value = JSON.parse(sessionStorage.getItem('userInfo')).organizationId;
         }
     }

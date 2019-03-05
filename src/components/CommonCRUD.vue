@@ -52,7 +52,7 @@
                 width="55"
                 align="center">
             </el-table-column>
-            <el-table-column v-for="item in columns" v-if="!item.notShow" :key="item.name" :prop="item.aliasName || item.name" :label="item.des"
+            <el-table-column v-for="item in columns" v-if="item.notShow !== 'true'" :key="item.name" :prop="item.name" :label="item.des"
                              :width="item.width || ''" :formatter="item.formatter" align="center"></el-table-column>
         </el-table>
         <el-pagination style="text-align: right;margin-top: 20px;"
@@ -63,12 +63,13 @@
         v-if="dialogVisible"
         :title="title"
         :visible.sync="dialogVisible"
-        width="50%"
+        width="60%"
         align="left"
         :modal-append-to-body='false'
+        :append-to-body="true"
         :before-close="handleClose">
-        <el-form :inline="true" :model="form" :rules="rules" ref="form" class="demo-form-inline" label-width="100px">
-            <el-form-item v-for="item in formColumns"  :key="item.des" :label="item.des" :prop="item.name" >
+        <el-form :inline="true" :model="form" :rules="rules" ref="form" class="demo-form-inline" label-width="100px" >
+            <el-form-item v-for="item in formColumns"  :key="item.des" :label="item.des" :prop="item.name" v-if="item.formShow !== 'false'">
                 <el-input v-model="form[item.name]" v-if="item.type === 'string'" :disabled="item.disabled || disabled"></el-input>
                 <el-select v-model="form[item.name]" v-else-if="item.type === 'select'" filterable :disabled="item.disabled || disabled">
                     <el-option v-for="opItem in item.options" :value="opItem.value" :label="opItem.label" :key="opItem.value"></el-option>
@@ -85,6 +86,7 @@
                 </el-date-picker>
                 <el-input v-model="form[item.name]" type="textarea" :rows="2" v-if="item.type === 'textarea'" :disabled="item.disabled || disabled"></el-input>
                 <!--预留富文本编辑-->
+                <Tinymce v-if="item.type === 'rich-editor'" v-model="form[item.name]"></Tinymce>
                 <CommonUpload v-if="item.type === 'file'" :value="form[item.name]" @getValue="form[item.name] = $event"></CommonUpload>
             </el-form-item>
         </el-form>
@@ -98,7 +100,8 @@
 
 <script>
     import reqType from '@/api/reqType';
-    import CommonUpload from '@/components/UpLoad'
+    import CommonUpload from '@/components/UpLoad';
+    import Tinymce from '@/components/Tinymce';
     export default {
         name: 'CommonCRUD',
         props: {
@@ -167,7 +170,8 @@
             }
         },
         components: {
-            CommonUpload
+            CommonUpload,
+            Tinymce
         },
         methods: {
             rowClick(row) {
