@@ -105,6 +105,11 @@ export default {
                     name: "formShow",
                     type: 'string',
                     des: "表单是否显示",
+                },
+                {
+                    name: "aliasName",
+                    type: 'string',
+                    des: "别名",
                 }
             ],
             sortColumns: [

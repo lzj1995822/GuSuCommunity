@@ -52,7 +52,7 @@
                 width="55"
                 align="center">
             </el-table-column>
-            <el-table-column v-for="item in columns" v-if="item.notShow !== 'true'" :key="item.name" :prop="item.name" :label="item.des"
+            <el-table-column v-for="item in columns" v-if="item.notShow !== 'true'" :key="item.name" :prop="item.aliasName || item.name" :label="item.des"
                              :width="item.width || ''" :formatter="item.formatter" align="center"></el-table-column>
         </el-table>
         <el-pagination style="text-align: right;margin-top: 20px;"
