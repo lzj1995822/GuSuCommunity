@@ -14,10 +14,18 @@
         created(){
             this.formColumns = this.$store.state.classInfo.properties
             this.handleSelectOptions();
+            this.departmentOptios(JSON.parse(sessionStorage.getItem('userInfo')).organizationId);
+            this.queryColumns[0].value = JSON.parse(sessionStorage.getItem('userInfo')).organizationId;
         },
         data() {
             return {
                 queryColumns:[
+                    {
+                        name: 'departmentId',
+                        type: 'string',
+                        value: '',
+                        visible: false
+                    },
                     {
                         des: '姓名',
                         name: 'name',
@@ -37,7 +45,11 @@
                     }
                 )
                 tansfer(this.formColumns);
-            }
+            },
+            departmentOptios(org){
+                    this.formColumns.filter(item => item.name === 'departmentId')[0].value = org;
+                }
+
         },
         components: {
             CommonCRUD
