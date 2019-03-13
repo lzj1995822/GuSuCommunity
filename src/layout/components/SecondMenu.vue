@@ -1,7 +1,7 @@
 <template>
 	<div class="second-menu">
-        <div class="second-menu-div" v-for="item in children" @click="$router.push({name: item.name})">
-            {{item.name}}
+        <div class="second-menu-div"  v-if="item.meta.icon" v-for="item in children" @click="$router.push({name: item.name})">
+            <img :src="item.meta.icon" alt="">
         </div>
     </div>
 </template>
@@ -30,5 +30,12 @@
     }
     .second-menu-div {
         cursor: pointer;
+        margin: 20px 30px;
+        display: inline-block;
     }
+    .second-menu-div img {
+        width: calc(100vw/1920*283*.9);
+        height: calc(100vw/1920*221*.9);
+    }
+
 </style>

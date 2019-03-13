@@ -1,16 +1,31 @@
 <template>
-    <section>
+    <section class="homeMap">
         <div id="allmap"></div>
+        <div class="popover">
+            <el-popover
+                v-for="item in popover"
+                style="display: block;margin-bottom: 10px"
+                :popover-class="{'padding': 0}"
+                placement="right"
+                trigger="hover">
+                <el-button class="popover-btn" :style="{'background': `url(../../../static/img/${item.picName})`}" v-for="subItem in item.children" @click="subItem.handler()"></el-button>
+                <el-button class="popover-btn" :style="{'background': `url(../../../static/img/${item.picName})`}" slot="reference"> </el-button>
+            </el-popover>
+        </div>
+        <Search :map="map" class="search"></Search>
     </section>
 
 </template>
 
 <script>
+    import mapData from '../data/homeMap';
+    import Search from '@/components/MapSearch';
     export default {
         name: "HomeMap",
         data() {
             return {
                 map: {},
+                popover: mapData.popover
             }
         },
         methods: {
@@ -38,10 +53,15 @@
             document.getElementById('allmap').style.height = `${Math.ceil(document.body.clientHeight - headerHeight - menuHeight - 45)}px`;
             setTimeout( () => {
                 document.getElementsByClassName('app-main')[0].style.paddingBottom = '0px';
-            }, 200)
+            }, 200);
+            document.getElementsByClassName('popover')[0].style.top = `${menuHeight + headerHeight + 60}px`;
+            document.getElementsByClassName('search')[0].style.top = `${menuHeight + headerHeight + 60}px`;
         },
         beforeDestroy() {
             document.getElementsByClassName('app-main')[0].style.paddingBottom = '30px';
+        },
+        components: {
+            Search
         }
 
     }
@@ -51,5 +71,22 @@
     #allmap {
         width: 100%;
         height: 100%;
+    }
+    .popover {
+        position: absolute;
+        left: 25px;
+    }
+    .popover-btn {
+        width: calc(100vw/1920*73);
+        height: calc(100vw/1920*74);
+        background-size: cover !important;
+        border: none !important;
+    }
+    .el-popover {
+        padding: 0 !important;
+    }
+    .search {
+        position: absolute;
+        right: 25px;
     }
 </style>

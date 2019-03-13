@@ -37,8 +37,8 @@
         <div class="handler-btn">
             <el-button type="success" plain @click="$router.go(-1)" class="self-back self-btn">&nbsp;</el-button>
             <el-button v-if="addBtnVis" type="primary" plain @click="add" class="self-add self-btn">&nbsp;</el-button>
-            <el-button v-if="editBtnVis" type="success" plain class="self-btn" @click="edit">编辑</el-button>
-            <el-button v-if="lookBtnVis" type="success" plain class="self-btn" @click="look">查看</el-button>
+            <el-button v-if="editBtnVis" type="success" plain class="self-btn self-edit" @click="edit">&nbsp;</el-button>
+            <el-button v-if="lookBtnVis" type="success" plain class="self-btn self-look" @click="look">&nbsp;</el-button>
             <el-button v-if="delBtnVis" type="danger" plain @click="deleteRow" class="self-del self-btn">&nbsp;</el-button>
             <slot name="header-btn" :selected="selected"></slot>
         </div>
@@ -46,7 +46,7 @@
         <el-table :data="tableData" v-loading="loading" border
                   ref="table"
                   @row-click="rowClick"
-                  :header-cell-style="{'background-color': '#fafafa','color': 'rgb(80, 80, 80)','border-bottom': '1px rgba(64, 158, 255, .7) solid'}"
+                  :header-cell-style="{'background-color': '#fafafa','color': 'rgb(80, 80, 80)','border-bottom': '1px solid #dee2e6'}"
                   @selection-change="handleSelectionChange">
             <el-table-column
                 type="selection"
@@ -379,12 +379,15 @@
         margin-left: 10px;
     }
     .el-pagination__sizes .el-input--mini .el-input__inner {
-        width: 100px !important;
+        width: 120px !important;
+    }
+    .el-pagination__sizes .el-select {
+        width: 120px !important;
     }
     .self-btn {
         width: 56px !important;
         height: 28px !important;
-        border-radius: 5px;
+        border-radius: 5px !important;
     }
     .self-add {
         background: url('../../static/img/add.png') !important;
@@ -396,6 +399,14 @@
     }
     .self-back {
         background: url('../../static/img/back.png') !important;
+        background-size: cover !important;
+    }
+    .self-edit {
+        background: url('../../static/img/edit.png') !important;
+        background-size: cover !important;
+    }
+    .self-look {
+        background: url('../../static/img/look.png') !important;
         background-size: cover !important;
     }
 </style>

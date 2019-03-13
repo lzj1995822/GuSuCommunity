@@ -49,7 +49,7 @@ export default {
         width:200px !important;
     }
     i {
-        font-size: 12px !important;
+        font-size: 16px !important;
     }
   .el-textarea__inner{
       width:200px !important;

@@ -13,7 +13,7 @@
             :render-content="renderContent">
         </el-tree>
 
-        <el-dialog title="路由配置" :visible.sync="handlerVis" width="30%" align="left">
+        <el-dialog title="路由配置" v-if="handlerVis" :visible.sync="handlerVis" width="30%" align="left">
             <el-form :model="handlerForm" class="dialog-form" ref="handlerForm">
                 <template v-for="item in classInfo.properties">
                     <el-form-item v-if="item.isObject === '0'" :key="item.id" :label="item.des" :prop="item.name" :inline="true" label-width="105px">
@@ -23,7 +23,8 @@
                         <el-form-item :label="item.des" :key="item.id" label-width="100px">
                         </el-form-item>
                         <el-form-item v-for="subItem in item.obj.properties" :key="subItem.id" :label="subItem.des" :prop="subItem.name" :inline="true" label-width="105px">
-                            <el-input v-model="handlerForm[item.name][subItem.name]" type="text"></el-input>
+                            <CommonUpload v-if="subItem.type === 'file'" :value="handlerForm[item.name][subItem.name]" @getValue="handlerForm[item.name][subItem.name] = $event"></CommonUpload>
+                            <el-input v-else v-model="handlerForm[item.name][subItem.name]" type="text"></el-input>
                         </el-form-item>
                     </template>
                 </template>
@@ -38,6 +39,7 @@
 </template>
 
 <script>
+import CommonUpload from '@/components/UpLoad';
 import DynamicRoutes from '@/utils/dynamic-routes';
 export default {
     name: "RouteConfig",
@@ -174,6 +176,9 @@ export default {
                 this.treeLoading = false;
             });
         },
+    },
+    components: {
+        CommonUpload
     }
 }
 </script>
