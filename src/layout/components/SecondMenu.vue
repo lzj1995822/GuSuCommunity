@@ -3,6 +3,9 @@
         <div class="second-menu-div"  v-if="item.meta.icon" v-for="item in children" @click="$router.push({name: item.name})">
             <img :src="item.meta.icon" alt="">
         </div>
+        <div class="second-menu-div"  v-if="!item.meta.icon" v-for="item in children" @click="$router.push({name: item.name})">
+            <img :src="item.meta.icon" alt="">
+        </div>
     </div>
 </template>
 
@@ -26,7 +29,7 @@
 <style scoped>
     .second-menu {
         width: 80%;
-        margin: 5% auto;
+        margin: 2% auto;
     }
     .second-menu-div {
         cursor: pointer;

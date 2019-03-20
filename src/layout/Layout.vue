@@ -31,7 +31,7 @@
             let menuHeight = this.$screen() * 53;
             document.getElementsByClassName("header-bg")[0].style.height = `${Math.ceil(headerHeight)}px`;
             document.getElementsByClassName('sidebar-container')[0].style.height = `${Math.ceil(menuHeight)}px`;
-            // document.getElementsByClassName('main-container')[0].style.height = `${Math.ceil(document.body.clientHeight - headerHeight - menuHeight)}px`;
+            document.getElementsByClassName('main-container')[0].style.minHeight = `${Math.ceil(document.body.clientHeight - headerHeight - menuHeight)}px`;
         }
     }
 </script>
