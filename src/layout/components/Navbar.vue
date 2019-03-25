@@ -19,8 +19,8 @@
 
                 <el-dropdown trigger="click">
                     <span class="el-dropdown-link">
-                        <img class="person-img fl"  alt="" src="../../assets/logo.png">
-                        <i class="person-name fl">{{user}}</i>
+                        <img class="person-img fl"  alt="" :src="user.photo">
+                        <i class="person-name fl">{{user.name}}</i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item @click.native="myMessage">我的消息</el-dropdown-item>
@@ -50,7 +50,10 @@ export default {
     data() {
         return {
             msgVisible: false,
-            user: {},
+            user: {
+                name:'',
+                photo:''
+            },
             msgList: [{
                 url: '/component/test?id=12-123-sda&status=Handle',
                 msg: '新增组件测试'
@@ -100,7 +103,8 @@ export default {
         }
     },
     mounted() {
-        this.user = sessionStorage.getItem('user');
+        this.user.name = JSON.parse(sessionStorage.getItem('userInfo')).name;
+        this.user.photo = JSON.parse(sessionStorage.getItem('userInfo')).photo;
     }
 }
 </script>
