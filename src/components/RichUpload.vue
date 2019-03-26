@@ -139,6 +139,6 @@
         border-radius: 5px;
     }
     .file-upload{
-        width:400px;
+        width:500px;
     }
 </style>
