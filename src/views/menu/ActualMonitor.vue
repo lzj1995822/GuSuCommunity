@@ -1,21 +1,23 @@
 <template>
-    <section style="display: flex;height: 700px">
-        <div style="flex: 1">
+    <section style="display: flex;height: 500px;">
+        <div style="flex: 1;">
             <el-input
                 placeholder="输入关键字进行过滤"
                 size="large"
                 v-model="filterText"
-                style="margin: 12px">
+                style="margin: 12px;">
             </el-input>
-            <el-tree
-                :data="treeData"
-                @node-click="handleNodeClick"
-                :filter-node-method="filterNode"
-                :highlight-current="true"
-                ref="tree"
-                style="margin: 0 12px"
-                @node-expand="showChildren">
-            </el-tree>
+            <el-scrollbar style="height: 100%;">
+                <el-tree
+                    :data="treeData"
+                    @node-click="handleNodeClick"
+                    :filter-node-method="filterNode"
+                    :highlight-current="true"
+                    ref="tree"
+                    style="margin: 0 12px"
+                    @node-expand="showChildren">
+                </el-tree>
+            </el-scrollbar>
         </div>
         <div style="flex: 3;margin: 12px 5px">
             <object classid="clsid:9ECD2A40-1222-432E-A4D4-154C7CAB9DE3" id="spv"  width="95%" height="100%;"></object>
