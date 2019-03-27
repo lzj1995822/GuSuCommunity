@@ -1,28 +1,25 @@
 <template>
     <div class="login-container">
-        <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-            <div class="title-container">
-                <h3 class="title">登 录</h3>
-            </div>
-            <el-form-item prop="code">
-                <span class="svg-container svg-container_login">
+        <el-form class="login-form" inline autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" >
+            <el-form-item prop="code" label="登录名" style="margin-right: 5%;" >
+                <!--<span class="svg-container svg-container_login">
                   <icon name="user" scale="2.5"></icon>
-                </span>
+                </span>-->
                 <el-input name="code" size="small" type="text" v-model="loginForm.code" autoComplete="on" placeholder="code"></el-input>
             </el-form-item>
 
-            <el-form-item prop="password">
-                <span class="svg-container">
+            <el-form-item prop="password" label="密码" style="margin-right: 5%" >
+                <!--<span class="svg-container">
                   <icon name="password" scale="2"/>
-                </span>
+                </span>-->
                 <el-input name="password" size="small" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="password"></el-input>
                 <span class="show-pwd" @click="showPwd">
                     <icon name="eye" scale="2"/>
                 </span>
             </el-form-item>
-
-            <el-button type="primary" size="small" style="width:100%;margin:15px 0;" :loading="loading" @click.native.prevent="handleLogin">登 录</el-button>
-
+            <el-form-item>
+                <el-button  size="small"  :loading="loading" @click.native.prevent="handleLogin">登 录</el-button>
+            </el-form-item>
         </el-form>
 
     </div>
@@ -54,7 +51,7 @@ export default {
             },
             passwordType: 'password',
             loading: false,
-            showDialog: false
+            showDialog: false,
         };
     },
     methods: {
@@ -62,23 +59,32 @@ export default {
             this.passwordType = this.passwordType === 'password' ? '' : 'password';
         },
         handleLogin () {
+            this.loading = true;
             this.$http('POST', `/identity/principal/login`, this.loginForm).then(data => {
-                sessionStorage.setItem('token', data);
+                let token = data.split("$")[0];
+                sessionStorage.setItem('token', token);
                 sessionStorage.setItem('user', this.loginForm.code);
-            }).then(() => {
-                this.$http('POST', `/identity/sysRoutes/list`, false).then(data => {
+                return data.split("$")[1];
+            }).then((userId) => {
+                this.$http('GET',`/identity/principal/${userId}id`,false).then(data => {
+                    sessionStorage.setItem('userInfo',JSON.stringify(data));
+                });
+                this.$http('GET', `/identity/roleMenu/menu`, false).then(data => {
                     sessionStorage.setItem("menu",JSON.stringify(data));
                     this.$store.commit("getMenu",data);
                     DynamicRoutes.transfer(data);
                     this.$router.addRoutes(data);
-                    this.loading = true;
-                    this.$router.push('Home');
+                    this.$router.push({path: '/index/homeMap'});
+                    this.loading = false;
                 });
             });
         }
     },
     created () {
         // window.addEventListener('hashchange', this.afterQRScan)
+    },
+    mounted(){
+
     },
     destroyed () {
         // window.removeEventListener('hashchange', this.afterQRScan)
@@ -92,32 +98,10 @@ export default {
 
     /* reset element-ui css */
     .login-container {
-        .el-input {
-            display: inline-block;
-            width: 85%;
-            input {
-                background: transparent;
-                border: 0;
-                -webkit-appearance: none;
-                border-radius: 0;
-                padding: 12px 5px 12px 15px;
-                color: $light_gray;
-                &:-webkit-autofill {
-                    -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
-                    -webkit-text-fill-color: #fff !important;
-                }
-            }
-        }
-        .el-form-item {
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            color: #454545;
-        }
     }
 </style>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style rel="stylesheet/scss" lang="scss">
     $bg: #2d3a4b;
     $dark_gray: #2d3a4b;
     $light_gray: #889aa4;
@@ -127,19 +111,34 @@ export default {
         height: 100%;
         width: 100%;
         //<!--background-color: $bg;-->
-        background-image: url("../../assets/loginBg.png");
+        background-image: url("../../../static/img/login.png");
         background-size: cover;
         .login-form {
             position: absolute;
-            left: 0;
+            left: calc(100vw/1980*400);
             right: 0;
-            width: 380px;
-            height: 330px;
-            padding: 35px 35px 15px 35px;
-            margin: 15% auto;
-            background-color: rgba(255,255,255,.9);
-            box-shadow: 1px 1px 1px gray;
-            border-radius: 5px;
+            width: 50%;
+            height: 5%;
+            /*padding: 35px 35px 15px 35px;*/
+            margin-top: calc(100vw/1980*820) ;
+            text-align: left;
+
+        }
+        .el-form-item__label {
+            color: #6e2f0b !important
+        }
+        .el-input__inner {
+            border-color:  #6e2f0b !important;
+            border-radius: 0px;
+        }
+        .el-button {
+            background: #6e2f0b !important;
+            border: none;
+            color: #fff;
+            font-weight: 600;
+        }
+        i {
+            font-size: 12px !important;
         }
         .tips {
             font-size: 14px;

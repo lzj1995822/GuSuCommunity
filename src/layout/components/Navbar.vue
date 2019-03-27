@@ -4,7 +4,8 @@
             <div class="fl">
                 <!-- 面包屑导航 -->
                 <el-breadcrumb separator-class="el-icon-arrow-right">
-                    <el-breadcrumb-item :to="{ path: '/' }"><icon name="list" scale="2.3" style="margin: 0 8px -5px 2px"></icon> 首页</el-breadcrumb-item>
+                    <!--<el-breadcrumb-item :to="{ path: '/' }"></el-breadcrumb-item>-->
+                    <icon name="list" scale="2.3" style="margin: 0 8px -5px 2px;float: left"></icon>
                     <transition-group name="breadcrumb">
                         <el-breadcrumb-item v-for="item in breadList" :key="item.path">
                             <span style="margin-top: 4px;display: inline-block;font-weight: 400;transition: none">{{item.meta.title}}</span>
@@ -18,8 +19,8 @@
 
                 <el-dropdown trigger="click">
                     <span class="el-dropdown-link">
-                        <img class="person-img fl"  alt="" src="../../assets/logo.png">
-                        <i class="person-name fl">{{user}}</i>
+                        <img class="person-img fl"  alt="" :src="user.photo">
+                        <i class="person-name fl">{{user.name}}</i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item @click.native="myMessage">我的消息</el-dropdown-item>
@@ -49,7 +50,10 @@ export default {
     data() {
         return {
             msgVisible: false,
-            user: {},
+            user: {
+                name:'',
+                photo:''
+            },
             msgList: [{
                 url: '/component/test?id=12-123-sda&status=Handle',
                 msg: '新增组件测试'
@@ -64,7 +68,6 @@ export default {
             let arr = [];
             // 如果有重定向，则是由于没有子菜单(因此过滤掉)
             let matched = this.$route.matched.filter(route => !route.redirect)
-            console.log("123",this.$store.state.menuList,this.$route.matched)
             this.$store.state.menuList.map(item => {
                 if(item.name === matched[0].name) {
                     arr.push(item);
@@ -100,7 +103,8 @@ export default {
         }
     },
     mounted() {
-        this.user = sessionStorage.getItem('user');
+        this.user.name = JSON.parse(sessionStorage.getItem('userInfo')).name;
+        this.user.photo = JSON.parse(sessionStorage.getItem('userInfo')).photo;
     }
 }
 </script>
@@ -111,13 +115,13 @@ export default {
 }
 
 .menu-bar {
-    height: 50px;
-    line-height: 50px;
+    height: 40px;
+    line-height: 40px;
     overflow: hidden;
     padding: 0 12px;
     .fl {
         float: left;
-        margin-top: 16px;
+        margin-top: 12px;
         vertical-align: center;
     }
     .fa {
@@ -132,6 +136,10 @@ export default {
     .menu-right {
         height: 50px;
         margin-right: 20px;
+        position: absolute;
+        top: 40px;
+        z-index: 999;
+        right: 30px;
     }
     .person-img {
         width: 40px;
@@ -140,10 +148,12 @@ export default {
         margin: 5px 10px;
         border: 1px solid #888888;
         box-shadow: 1px 1px 1px #999;
+        background-color: #fff;
     }
     .person-name {
         cursor: pointer;
         line-height: 18px;
+        color: #fff;
     }
 }
 </style>

@@ -21,9 +21,25 @@ Vue.use(ElementUI, {size: 'mini'});
 Vue.use(store);
 Vue.component('icon', Icon);
 
-Vue.prototype.$http = ht;
+Vue.prototype.$http = common.http;
 Vue.prototype.$genHttp = generate;
 Vue.prototype.$copy = (target) => Object.assign({}, target);
+Vue.prototype.$validate = (selected) => {
+    if (selected.length !== 1) {
+        ElementUI.Message({
+            type: 'warning',
+            message: selected.length > 1 ? '仅能选择一行记录' : '请选择一行记录'
+        });
+        return false;
+    }
+    return true;
+};
+
+Vue.prototype.$screen = () => {
+    let screenWidth = window.screen.width;
+    return screenWidth/1920;
+};
+
 getRouter(router);
 
 DynamicRoutes.flushHandler(router, store);

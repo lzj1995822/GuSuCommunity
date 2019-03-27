@@ -23,6 +23,10 @@ const router = new Router({
         {
             path: '*',
             redirect: '/404'
+        },
+        {
+            path: '/upload',
+            component: () => import('@/components/UpLoad')
         }
     ]
 });
