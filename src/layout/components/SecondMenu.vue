@@ -1,10 +1,14 @@
 <template>
 	<div class="second-menu">
-        <div class="second-menu-div"  v-if="item.meta.icon" v-for="item in children" @click="$router.push({name: item.name})">
-            <img :src="item.meta.icon" alt="">
-        </div>
-        <div class="second-menu-div"  v-if="!item.meta.icon" v-for="item in children" @click="$router.push({name: item.name})">
-            <img :src="item.meta.icon" alt="">
+        <!--<div class="second-menu-div"  v-if="item.meta.icon" v-for="item in children" @click="$router.push({name: item.name})">-->
+            <!--<img :src="item.meta.icon" alt="">-->
+        <!--</div>-->
+        <!--<div class="second-menu-div"  v-if="!item.meta.icon" v-for="item in children" @click="$router.push({name: item.name})">-->
+            <!--{{item.name}}-->
+            <!--<img :src="item.meta.icon" alt="">-->
+        <!--</div>-->
+        <div class="second-menu-div"  v-for="item in children" @click="$router.push({name: item.name})">
+            {{item.name}}
         </div>
     </div>
 </template>
@@ -23,6 +27,9 @@
                 this.$store.commit("getClassInfo", matched[matched.length-1].meta.classInfo);
             }
         },
+        mounted() {
+            console.log(this.children)
+        }
     }
 </script>
 
